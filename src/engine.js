@@ -7,13 +7,16 @@ export default function createEngine(canvas) {
     const width = 500;
     const height = 500;
 
-    let point1;
+    let points  = [];
 
     function init() {
         console.log('[init]');
 
-        const v1 = new Vector(width/2, height/2, 0);
-        point1 = new Point(v1, 5, '#40b');
+        points.push(new Point(new Vector(width/2, height/2, 0), 5, '#40b'))
+        points.push(new Point(new Vector(width/2, height/2, 0), 5, '#333'))
+        points.push(new Point(new Vector(width/2, height/2, 0), 5, '#006'))
+        points.push(new Point(new Vector(width/2, height/2, 0), 5, '#606'))
+        points.push(new Point(new Vector(width/2, height/2, 0), 5, '#05a'))
 
         requestAnimationFrame(render);
     }
@@ -24,10 +27,12 @@ export default function createEngine(canvas) {
         const max = 1;
         const min = -1;
 
-        point1.pos.x += Math.floor(Math.random() * (max - min + 1)) + min;
-        point1.pos.y += Math.floor(Math.random() * (max - min + 1)) + min;
-
-        point1.draw(ctx);
+        for(const point of points) {
+            point.pos.x += Math.floor(Math.random() * (max - min + 1)) + min;
+            point.pos.y += Math.floor(Math.random() * (max - min + 1)) + min;
+    
+            point.draw(ctx);
+        }
        
         requestAnimationFrame(render);
     }
