@@ -1,4 +1,5 @@
 import Vector from "./vector.js";
+import Point from "./point.js";
 
 export default function createEngine(canvas) {
 
@@ -6,12 +7,13 @@ export default function createEngine(canvas) {
     const width = 500;
     const height = 500;
 
-    let v1;
+    let point1;
 
     function init() {
         console.log('[init]');
 
-        v1 = new Vector(width/2, height/2, 0);
+        const v1 = new Vector(width/2, height/2, 0);
+        point1 = new Point(v1, 5, '#40b');
 
         requestAnimationFrame(render);
     }
@@ -22,12 +24,10 @@ export default function createEngine(canvas) {
         const max = 1;
         const min = -1;
 
-        v1.x += Math.floor(Math.random() * (max - min + 1)) + min;
-        v1.y += Math.floor(Math.random() * (max - min + 1)) + min;
+        point1.pos.x += Math.floor(Math.random() * (max - min + 1)) + min;
+        point1.pos.y += Math.floor(Math.random() * (max - min + 1)) + min;
 
-        ctx.beginPath();
-        ctx.arc(v1.x, v1.y, 5, 0, 2 * Math.PI, true);
-        ctx.fill();
+        point1.draw(ctx);
        
         requestAnimationFrame(render);
     }
