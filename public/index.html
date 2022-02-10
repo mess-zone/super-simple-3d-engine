@@ -5,9 +5,18 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Super Simple 3D Engine</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <script src="index.js"></script>
+    <script defer type="module" src="index.js"></script>
+    <style>
+        body {
+            background-color: #888;
+        }
+
+        #canvas {
+            background-color: black;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello World!</h1>
+    <canvas id="canvas" width="500" height="500"></canvas>
 </body>
 </html>
