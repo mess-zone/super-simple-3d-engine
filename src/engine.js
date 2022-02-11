@@ -25,6 +25,12 @@ export default function createEngine(canvas) {
         points.push(new Point(50, 150, 0, 13, '#4f8'));
         points.push(new Point(0, 44, 0, 8, '#05a'));
 
+        points[1].setRotationVelocity(0, 0, -1 * Math.PI / 360);
+        points[2].setRotationVelocity(0, 0, 1 * Math.PI / 360);
+        points[3].setRotationVelocity(0, 0, 2 * Math.PI / 360);
+        points[4].setRotationVelocity(0, 0, -1.5 * Math.PI / 360);
+        points[5].setRotationVelocity(0, 0, 0.5 * Math.PI / 360);
+
         requestAnimationFrame(render);
     }
 
@@ -98,7 +104,7 @@ export default function createEngine(canvas) {
             // ];
 
 
-            const angleRad = -1 * Math.PI / 360;
+            const angleRad = point.rotationVelocity.z;
             const rotationZ = [
                 [Math.cos(angleRad), -Math.sin(angleRad), 0],
                 [Math.sin(angleRad), Math.cos(angleRad), 0],
@@ -116,7 +122,7 @@ export default function createEngine(canvas) {
             let projected = MatrixHelper.matrixMultiplyVector(projection, rotated);
 
             point.pos = projected;
-            console.log(frameCount, time , steps, point.pos)
+            // console.log(frameCount, time , steps, point.pos)
         }
 
         for(const point of points) {

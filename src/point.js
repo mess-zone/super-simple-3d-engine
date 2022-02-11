@@ -5,6 +5,17 @@ export default class Point {
         this.pos = new Vector(posX, posY, posZ);
         this.radius = radius;
         this.color = color;
+        this.rotationVelocity = {
+            x: 0,
+            y: 0,
+            z: 0,
+        }
+    }
+
+    setRotationVelocity(x, y, z) {
+        this.rotationVelocity.x = x;
+        this.rotationVelocity.y = y;
+        this.rotationVelocity.z = z;
     }
 
     draw(ctx) {
