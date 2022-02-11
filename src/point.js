@@ -1,5 +1,7 @@
+import Vector from "./vector.js";
+
 export default class Point {
-    constructor(pos, radius, color) {
+    constructor(posX, posY, radius, color) {
         this.pos = pos;
         this.radius = radius;
         this.color = color;

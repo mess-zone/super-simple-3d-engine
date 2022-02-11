@@ -1,4 +1,4 @@
-import Vector from "./vector.js";
+
 import Point from "./point.js";
 
 export default function createEngine(canvas) {
@@ -12,11 +12,11 @@ export default function createEngine(canvas) {
     function init() {
         console.log('[init]');
 
-        points.push(new Point(new Vector(width/2, height/2, 0), 5, '#40b'))
-        points.push(new Point(new Vector(width/2, height/2, 0), 5, '#333'))
-        points.push(new Point(new Vector(width/2, height/2, 0), 5, '#006'))
-        points.push(new Point(new Vector(width/2, height/2, 0), 5, '#606'))
-        points.push(new Point(new Vector(width/2, height/2, 0), 5, '#05a'))
+        points.push(new Point(width/2, height/2, 0, 5, '#40b'));
+        points.push(new Point(width/2, height/2, 0, 5, '#333'));
+        points.push(new Point(width/2, height/2, 0, 5, '#006'));
+        points.push(new Point(width/2, height/2, 0, 5, '#606'));
+        points.push(new Point(width/2, height/2, 0, 5, '#05a'));
 
         requestAnimationFrame(render);
     }
