@@ -4,18 +4,28 @@ export default class MatrixHelper {
 
     }
 
-    static multiply(matrix, vector) {
+    static multiply(a, b) {
 
-        if(vector.length !== matrix.length) return null;
+        let colsA = a[0].length;
+        let rowsA = a.length;
+        let colsB = b[0].length;
+        let rowsB = b.length;
+
+        if(colsA !== rowsB) {
+            console.error('Columns of A must match rows of B');
+            return null;
+        }
 
         const result = [];
-
-        for(let row = 0; row < matrix.length; row++) {
-            let sum = 0;
-            for(let col = 0; col < vector.length; col++) {
-                sum += matrix[row][col] * vector[col];
+        for(let j = 0; j < rowsA; j++) {
+            result[j] = [];
+            for(let i = 0; i < colsB; i++) {
+                let sum = 0;
+                for(let n = 0; n < colsA; n++) {
+                    sum += a[j][n] * b[n][i];
+                }
+                result[j][i] = sum;
             }
-            result[row] = sum;
         }
 
         return result;
