@@ -108,20 +108,11 @@ export default class Cube {
         }
 
         if(this.appearance.edges) {
-            this.drawEdge(this.vertices[0].pos, this.vertices[1].pos, ctx);
-            this.drawEdge(this.vertices[1].pos, this.vertices[2].pos, ctx);
-            this.drawEdge(this.vertices[2].pos, this.vertices[3].pos, ctx);
-            this.drawEdge(this.vertices[3].pos, this.vertices[0].pos, ctx);
-
-            this.drawEdge(this.vertices[4].pos, this.vertices[5].pos, ctx);
-            this.drawEdge(this.vertices[5].pos, this.vertices[6].pos, ctx);
-            this.drawEdge(this.vertices[6].pos, this.vertices[7].pos, ctx);
-            this.drawEdge(this.vertices[7].pos, this.vertices[4].pos, ctx);
-
-            this.drawEdge(this.vertices[0].pos, this.vertices[4].pos, ctx);
-            this.drawEdge(this.vertices[1].pos, this.vertices[5].pos, ctx);
-            this.drawEdge(this.vertices[2].pos, this.vertices[6].pos, ctx);
-            this.drawEdge(this.vertices[3].pos, this.vertices[7].pos, ctx);
+            for (let i = 0; i < 4; i++) {
+                this.drawEdge(this.vertices[i].pos, this.vertices[(i + 1) % 4].pos, ctx);
+                this.drawEdge(this.vertices[i + 4].pos, this.vertices[((i + 1) % 4) + 4].pos, ctx);
+                this.drawEdge(this.vertices[i].pos, this.vertices[i + 4].pos, ctx);
+            }
         }
     }
 
