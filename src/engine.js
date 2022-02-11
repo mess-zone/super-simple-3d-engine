@@ -20,7 +20,7 @@ export default function createEngine(canvas) {
         cube.rotateZ(45);
 
         cubes.push(cube);
-
+        
         requestAnimationFrame(render);
     }
 

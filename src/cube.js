@@ -99,7 +99,7 @@ export default class Cube {
     }
 
     drawFace(v1, v2, v3, v4, ctx) {
-        const color = "#888";
+        const color = "#8888";
 
         ctx.fillStyle = color;
 
