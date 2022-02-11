@@ -12,7 +12,7 @@ export default class Cube {
 
         this.appearance = {
             vertices: true,
-            edges: false,
+            edges: true,
             faces: false,
         };
         
@@ -24,13 +24,13 @@ export default class Cube {
 
         this.vertices.push(new Vertice(-size/2, -size/2, -size/2));
         this.vertices.push(new Vertice(size/2, -size/2, -size/2));
-        this.vertices.push(new Vertice(-size/2, size/2, -size/2));
         this.vertices.push(new Vertice(size/2, size/2, -size/2));
+        this.vertices.push(new Vertice(-size/2, size/2, -size/2));
 
         this.vertices.push(new Vertice(-size/2, -size/2, size/2));
         this.vertices.push(new Vertice(size/2, -size/2, size/2));
-        this.vertices.push(new Vertice(-size/2, size/2, size/2));
         this.vertices.push(new Vertice(size/2, size/2, size/2));
+        this.vertices.push(new Vertice(-size/2, size/2, size/2));
     }
 
     /**
@@ -78,11 +78,50 @@ export default class Cube {
         }
     }
 
+    drawVertice(vector, ctx) {
+        const color = "#fff";
+        const radius = 5;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(vector.x, vector.y, radius, 0, 2 * Math.PI, true);
+        ctx.fill();
+    }
+
+    drawEdge(start, end, ctx) {
+        const color = "#fff";
+        const strokeWidth = 3;
+
+        ctx.strokeStyle = color;
+        ctx.lineWidth = strokeWidth;
+
+        ctx.beginPath();
+        ctx.moveTo(start.x, start.y);
+        ctx.lineTo(end.x, end.y);
+        ctx.stroke();
+    }
+
     draw(ctx) {
         if(this.appearance.vertices) {
             this.vertices.forEach(vertice => {
-                vertice.draw(ctx);
+                this.drawVertice(vertice.pos, ctx);
             });
+        }
+
+        if(this.appearance.edges) {
+            this.drawEdge(this.vertices[0].pos, this.vertices[1].pos, ctx);
+            this.drawEdge(this.vertices[1].pos, this.vertices[2].pos, ctx);
+            this.drawEdge(this.vertices[2].pos, this.vertices[3].pos, ctx);
+            this.drawEdge(this.vertices[3].pos, this.vertices[0].pos, ctx);
+
+            this.drawEdge(this.vertices[4].pos, this.vertices[5].pos, ctx);
+            this.drawEdge(this.vertices[5].pos, this.vertices[6].pos, ctx);
+            this.drawEdge(this.vertices[6].pos, this.vertices[7].pos, ctx);
+            this.drawEdge(this.vertices[7].pos, this.vertices[4].pos, ctx);
+
+            this.drawEdge(this.vertices[0].pos, this.vertices[4].pos, ctx);
+            this.drawEdge(this.vertices[1].pos, this.vertices[5].pos, ctx);
+            this.drawEdge(this.vertices[2].pos, this.vertices[6].pos, ctx);
+            this.drawEdge(this.vertices[3].pos, this.vertices[7].pos, ctx);
         }
     }
 
