@@ -14,7 +14,7 @@ export default function createEngine(canvas) {
     function init() {
         console.log('[init]');
 
-        const cube = new Cube(0, 0, 0, 100);
+        const cube = new Cube(0, 0, 0, 1);
         cube.rotateX(25);
         cube.rotateY(75);
         cube.rotateZ(45);

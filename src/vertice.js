@@ -70,13 +70,24 @@ export default class Vertice {
 
         rotated = MatrixHelper.matrixMultiplyVector(rotationZ, rotated);
 
+
+
         const orthographicProjection = [
-            [1, 0, 0],
-            [0, 1, 0]
+            [ 1, 0, 0 ],
+            [ 0, 1, 0 ]
         ];
 
-        let projected2D = MatrixHelper.matrixMultiplyVector(orthographicProjection, rotated);
+        const distance = 2;
+        const z = 1 / ( distance - rotated.z);
 
+        const perspectiveProjection = [
+            [ z, 0, 0 ],
+            [ 0, z, 0 ]
+        ];
+
+        let projected2D = MatrixHelper.matrixMultiplyVector(perspectiveProjection, rotated);
+
+        projected2D.multiply(200);
         this.pos = projected2D;
         // console.log(frameCount, time, this.pos)
     }
