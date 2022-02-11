@@ -13,7 +13,7 @@ export default class Cube {
         this.appearance = {
             vertices: true,
             edges: true,
-            faces: false,
+            faces: true,
         };
         
         this.rotationX = 0;
@@ -100,11 +100,30 @@ export default class Cube {
         ctx.stroke();
     }
 
+    drawFace(v1, v2, v3, v4, ctx) {
+        const color = "#888";
+
+        ctx.fillStyle = color;
+
+        ctx.beginPath();
+        ctx.moveTo(v1.x, v1.y);
+        ctx.lineTo(v2.x, v2.y);
+        ctx.lineTo(v3.x, v3.y);
+        ctx.lineTo(v4.x, v4.y);
+        ctx.closePath();
+        ctx.fill();
+    }
+
     draw(ctx) {
-        if(this.appearance.vertices) {
-            this.vertices.forEach(vertice => {
-                this.drawVertice(vertice.pos, ctx);
-            });
+        if(this.appearance.faces) {
+            this.drawFace(this.vertices[0].pos, this.vertices[1].pos, this.vertices[2].pos, this.vertices[3].pos, ctx);
+            this.drawFace(this.vertices[4].pos, this.vertices[5].pos, this.vertices[6].pos, this.vertices[7].pos, ctx);
+            
+            this.drawFace(this.vertices[0].pos, this.vertices[4].pos, this.vertices[7].pos, this.vertices[3].pos, ctx);
+            this.drawFace(this.vertices[1].pos, this.vertices[5].pos, this.vertices[6].pos, this.vertices[2].pos, ctx);
+            
+            this.drawFace(this.vertices[0].pos, this.vertices[1].pos, this.vertices[5].pos, this.vertices[4].pos, ctx);
+            this.drawFace(this.vertices[3].pos, this.vertices[2].pos, this.vertices[6].pos, this.vertices[7].pos, ctx);
         }
 
         if(this.appearance.edges) {
@@ -114,6 +133,13 @@ export default class Cube {
                 this.drawEdge(this.vertices[i].pos, this.vertices[i + 4].pos, ctx);
             }
         }
+
+        if(this.appearance.vertices) {
+            this.vertices.forEach(vertice => {
+                this.drawVertice(vertice.pos, ctx);
+            });
+        }
+
     }
 
 }
