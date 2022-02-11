@@ -5,12 +5,21 @@ import MatrixHelper from "./matrixHelper.js";
 export default class Cube {
     constructor(posX, posY, posZ, size) {
         this.size = size;
+
         this.originalPos = new Vector(posX, posY, posZ);
         this.pos = new Vector(posX, posY, posZ);
-        this.points  = [];
+
+        this.appearance = {
+            vertices: true,
+            edges: false,
+            faces: false,
+        };
+        
         this.rotationX = 0;
         this.rotationY = 0;
         this.rotationZ = 0;
+        
+        this.points  = [];
 
         this.points.push(new Point(-size/2, -size/2, -size/2, 5, 'red'));
         this.points.push(new Point(size/2, -size/2, -size/2, 5, 'green'));
@@ -69,9 +78,11 @@ export default class Cube {
     }
 
     draw(ctx) {
-        this.points.forEach(point => {
-            point.draw(ctx);
-        });
+        if(this.appearance.vertices) {
+            this.points.forEach(point => {
+                point.draw(ctx);
+            });
+        }
     }
 
 }
