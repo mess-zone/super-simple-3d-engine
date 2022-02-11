@@ -1,18 +1,16 @@
 import Vector from "./vector.js";
 import MatrixHelper from "./matrixHelper.js";
 
-/**
- * @deprecated
- */
-export default class Point {
-    constructor(posX, posY, posZ, radius, color) {
+export default class Vertice {
+    constructor(posX, posY, posZ) {
         this.originalPos = new Vector(posX, posY, posZ);
         this.pos = new Vector(posX, posY, posZ);
-        this.radius = radius;
-        this.color = color;
         this.rotationX = 0;
         this.rotationY = 0;
         this.rotationZ = 0;
+        
+        this.color = '#fff';
+        this.radius = 5;
     }
 
     /**

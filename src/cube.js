@@ -1,5 +1,6 @@
 import Point from "./point.js";
 import Vector from "./vector.js";
+import Vertice from "./vertice.js";
 import MatrixHelper from "./matrixHelper.js";
 
 export default class Cube {
@@ -18,18 +19,18 @@ export default class Cube {
         this.rotationX = 0;
         this.rotationY = 0;
         this.rotationZ = 0;
-        
-        this.points  = [];
 
-        this.points.push(new Point(-size/2, -size/2, -size/2, 5, 'red'));
-        this.points.push(new Point(size/2, -size/2, -size/2, 5, 'green'));
-        this.points.push(new Point(-size/2, size/2, -size/2, 5, 'orange'));
-        this.points.push(new Point(size/2, size/2, -size/2, 5, 'blue'));
+        this.vertices = [];
 
-        this.points.push(new Point(-size/2, -size/2, size/2, 5, 'red'));
-        this.points.push(new Point(size/2, -size/2, size/2, 5, 'green'));
-        this.points.push(new Point(-size/2, size/2, size/2, 5, 'orange'));
-        this.points.push(new Point(size/2, size/2, size/2, 5, 'blue'));
+        this.vertices.push(new Vertice(-size/2, -size/2, -size/2));
+        this.vertices.push(new Vertice(size/2, -size/2, -size/2));
+        this.vertices.push(new Vertice(-size/2, size/2, -size/2));
+        this.vertices.push(new Vertice(size/2, size/2, -size/2));
+
+        this.vertices.push(new Vertice(-size/2, -size/2, size/2));
+        this.vertices.push(new Vertice(size/2, -size/2, size/2));
+        this.vertices.push(new Vertice(-size/2, size/2, size/2));
+        this.vertices.push(new Vertice(size/2, size/2, size/2));
     }
 
     /**
@@ -38,8 +39,8 @@ export default class Cube {
      */
     rotateX(velocity) {
         this.rotationX = velocity; 
-        this.points.forEach(point => {
-            point.rotateX(velocity);
+        this.vertices.forEach(vertice => {
+            vertice.rotateX(velocity);
         });
     }
 
@@ -49,8 +50,8 @@ export default class Cube {
      */
     rotateY(velocity) {
         this.rotationY = velocity; 
-        this.points.forEach(point => {
-            point.rotateY(velocity);
+        this.vertices.forEach(vertice => {
+            vertice.rotateY(velocity);
         });
     }
 
@@ -60,8 +61,8 @@ export default class Cube {
      */
     rotateZ(velocity) {
         this.rotationZ = velocity; 
-        this.points.forEach(point => {
-            point.rotateZ(velocity);
+        this.vertices.forEach(vertice => {
+            vertice.rotateZ(velocity);
         });
     }
 
@@ -71,16 +72,16 @@ export default class Cube {
      * @param {*} frameCount 
      */
     update(time, frameCount) {
-        for(const point of this.points) {
-            point.update(time, frameCount)
+        for(const vertice of this.vertices) {
+            vertice.update(time, frameCount)
             // console.log(frameCount, time, point.pos)
         }
     }
 
     draw(ctx) {
         if(this.appearance.vertices) {
-            this.points.forEach(point => {
-                point.draw(ctx);
+            this.vertices.forEach(vertice => {
+                vertice.draw(ctx);
             });
         }
     }
