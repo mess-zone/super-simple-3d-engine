@@ -17,17 +17,28 @@ export default function createEngine(canvas) {
 
         // points.push(new Point(0, 0, 0, 2, '#aaa'));
 
-        points.push(new Point(50, 0, 0, 10, '#606'));
-        points.push(new Point(50, 0, 0, 5, '#40b'));
-        points.push(new Point(100, 25, 0, 7, '#006'));
-        points.push(new Point(50, 150, 0, 13, '#4f8'));
-        points.push(new Point(0, 44, 0, 8, '#05a'));
+        points.push(new Point(-50, -50, 0, 5, 'red'));
+        points.push(new Point(50, -50, 0, 5, 'green'));
+        points.push(new Point(-50, 50, 0, 5, 'orange'));
+        points.push(new Point(50, 50, 0, 5, 'blue'));
+        // points.push(new Point(100, 25, 0, 7, '#006'));
+        // points.push(new Point(50, 150, 0, 13, '#4f8'));
+        // points.push(new Point(0, 44, 0, 8, '#05a'));
 
         points[0].rotateZ(45);
-        points[1].rotateZ(-45);
-        points[2].rotateZ(15);
-        points[3].rotateZ(-60);
-        points[4].rotateZ(120);
+        points[1].rotateZ(45);
+        points[2].rotateZ(45);
+        points[3].rotateZ(45);
+
+        points[0].rotateX(25);
+        points[1].rotateX(25);
+        points[2].rotateX(25);
+        points[3].rotateX(25);
+
+        points[0].rotateY(75);
+        points[1].rotateY(75);
+        points[2].rotateY(75);
+        points[3].rotateY(75);
 
         requestAnimationFrame(render);
     }
@@ -46,16 +57,35 @@ export default function createEngine(canvas) {
 
         for(const point of points) {
 
-            const angleDegrees = point.rotationZ * time;
-
-            const angleRad = angleDegrees * Math.PI / 180;
-            const rotationZ = [
-                [Math.cos(angleRad), -Math.sin(angleRad), 0],
-                [Math.sin(angleRad), Math.cos(angleRad), 0],
-                [0, 0, 1]
+            const angleXDegrees = point.rotationX * time;
+            const angleXRad = angleXDegrees * Math.PI / 180;
+            const rotationX = [
+                [ 1, 0, 0 ],
+                [ 0, Math.cos(angleXRad), -Math.sin(angleXRad) ],
+                [ 0, Math.sin(angleXRad), Math.cos(angleXRad) ]
             ];
 
-            let rotated = MatrixHelper.matrixMultiplyVector(rotationZ, point.originalPos);
+            let rotated = MatrixHelper.matrixMultiplyVector(rotationX, point.originalPos);
+
+            const angleYDegrees = point.rotationY * time;
+            const angleYRad = angleYDegrees * Math.PI / 180;
+            const rotationY = [
+                [ Math.cos(angleYRad), 0, Math.sin(angleYRad) ],
+                [ 0, 1, 0 ],
+                [ -Math.sin(angleYRad), 0, Math.cos(angleYRad) ]
+            ];
+
+            rotated = MatrixHelper.matrixMultiplyVector(rotationY, rotated);
+
+            const angleZDegrees = point.rotationZ * time;
+            const angleZRad = angleZDegrees * Math.PI / 180;
+            const rotationZ = [
+                [ Math.cos(angleZRad), -Math.sin(angleZRad), 0 ],
+                [ Math.sin(angleZRad), Math.cos(angleZRad), 0 ],
+                [ 0, 0, 1 ]
+            ];
+
+            rotated = MatrixHelper.matrixMultiplyVector(rotationZ, rotated);
 
             const projection = [
                 [1, 0, 0],
@@ -65,7 +95,7 @@ export default function createEngine(canvas) {
             let projected = MatrixHelper.matrixMultiplyVector(projection, rotated);
 
             point.pos = projected;
-            // console.log(frameCount, time , angleDegrees, angleRad, point.pos)
+            console.log(frameCount, time , angleXDegrees, angleXRad, point.pos)
         }
 
         for(const point of points) {
@@ -73,7 +103,7 @@ export default function createEngine(canvas) {
         }
 
         // canvas origin
-        ctx.fillStyle = '#000';
+        ctx.fillStyle = '#fff';
         ctx.beginPath();
         ctx.arc(0, 0, 2, 0, 2 * Math.PI, true);
         ctx.fill();
