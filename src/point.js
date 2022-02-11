@@ -1,8 +1,8 @@
 import Vector from "./vector.js";
 
 export default class Point {
-    constructor(posX, posY, radius, color) {
-        this.pos = pos;
+    constructor(posX, posY, posZ, radius, color) {
+        this.pos = new Vector(posX, posY, posZ);
         this.radius = radius;
         this.color = color;
     }
