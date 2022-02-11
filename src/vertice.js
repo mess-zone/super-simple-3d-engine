@@ -8,9 +8,6 @@ export default class Vertice {
         this.rotationX = 0;
         this.rotationY = 0;
         this.rotationZ = 0;
-        
-        this.color = '#fff';
-        this.radius = 5;
     }
 
     /**

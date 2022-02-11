@@ -1,7 +1,5 @@
-import Point from "./point.js";
 import Vector from "./vector.js";
 import Vertice from "./vertice.js";
-import MatrixHelper from "./matrixHelper.js";
 
 export default class Cube {
     constructor(posX, posY, posZ, size) {
