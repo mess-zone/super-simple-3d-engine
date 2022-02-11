@@ -1,4 +1,5 @@
 import Vector from "./vector.js";
+import MatrixHelper from "./matrixHelper.js";
 
 export default class Point {
     constructor(posX, posY, posZ, radius, color) {
@@ -33,6 +34,53 @@ export default class Point {
      */
     rotateZ(velocity) {
         this.rotationZ = velocity; 
+    }
+
+    /**
+     * Update position based on velocities
+     * @param {*} time 
+     * @param {*} frameCount 
+     */
+    update(time, frameCount) {
+        const angleXDegrees = this.rotationX * time;
+        const angleXRad = angleXDegrees * Math.PI / 180;
+        const rotationX = [
+            [ 1, 0, 0 ],
+            [ 0, Math.cos(angleXRad), -Math.sin(angleXRad) ],
+            [ 0, Math.sin(angleXRad), Math.cos(angleXRad) ]
+        ];
+
+        let rotated = MatrixHelper.matrixMultiplyVector(rotationX, this.originalPos);
+
+        const angleYDegrees = this.rotationY * time;
+        const angleYRad = angleYDegrees * Math.PI / 180;
+        const rotationY = [
+            [ Math.cos(angleYRad), 0, Math.sin(angleYRad) ],
+            [ 0, 1, 0 ],
+            [ -Math.sin(angleYRad), 0, Math.cos(angleYRad) ]
+        ];
+
+        rotated = MatrixHelper.matrixMultiplyVector(rotationY, rotated);
+
+        const angleZDegrees = this.rotationZ * time;
+        const angleZRad = angleZDegrees * Math.PI / 180;
+        const rotationZ = [
+            [ Math.cos(angleZRad), -Math.sin(angleZRad), 0 ],
+            [ Math.sin(angleZRad), Math.cos(angleZRad), 0 ],
+            [ 0, 0, 1 ]
+        ];
+
+        rotated = MatrixHelper.matrixMultiplyVector(rotationZ, rotated);
+
+        const projection = [
+            [1, 0, 0],
+            [0, 1, 0]
+        ];
+
+        let projected = MatrixHelper.matrixMultiplyVector(projection, rotated);
+
+        this.pos = projected;
+        // console.log(frameCount, time, this.pos)
     }
 
     draw(ctx) {

@@ -1,6 +1,5 @@
 
-import MatrixHelper from "./matrixHelper.js";
-import Point from "./point.js";
+import Cube from "./cube.js";
 
 export default function createEngine(canvas) {
 
@@ -10,43 +9,25 @@ export default function createEngine(canvas) {
 
     let frameCount = 0;
 
-    let points  = [];
+    let cubes = [];
 
     function init() {
         console.log('[init]');
 
-        // points.push(new Point(0, 0, 0, 2, '#aaa'));
+        const cube = new Cube(0, 0, 0, 100);
+        cube.rotateX(25);
+        cube.rotateY(75);
+        cube.rotateZ(45);
 
-        points.push(new Point(-50, -50, 0, 5, 'red'));
-        points.push(new Point(50, -50, 0, 5, 'green'));
-        points.push(new Point(-50, 50, 0, 5, 'orange'));
-        points.push(new Point(50, 50, 0, 5, 'blue'));
-        // points.push(new Point(100, 25, 0, 7, '#006'));
-        // points.push(new Point(50, 150, 0, 13, '#4f8'));
-        // points.push(new Point(0, 44, 0, 8, '#05a'));
-
-        points[0].rotateZ(45);
-        points[1].rotateZ(45);
-        points[2].rotateZ(45);
-        points[3].rotateZ(45);
-
-        points[0].rotateX(25);
-        points[1].rotateX(25);
-        points[2].rotateX(25);
-        points[3].rotateX(25);
-
-        points[0].rotateY(75);
-        points[1].rotateY(75);
-        points[2].rotateY(75);
-        points[3].rotateY(75);
+        cubes.push(cube);
 
         requestAnimationFrame(render);
     }
 
     function render(time) {
         time *= 0.001;  // convert time to seconds
+        // console.log(frameCount, time);
 
-        // if(steps > 24) return;
         // if(time > 1) return;
 
         ctx.resetTransform();
@@ -54,64 +35,19 @@ export default function createEngine(canvas) {
         //set canvas origin to center
         ctx.translate(width/2, height/2);
 
-
-        for(const point of points) {
-
-            const angleXDegrees = point.rotationX * time;
-            const angleXRad = angleXDegrees * Math.PI / 180;
-            const rotationX = [
-                [ 1, 0, 0 ],
-                [ 0, Math.cos(angleXRad), -Math.sin(angleXRad) ],
-                [ 0, Math.sin(angleXRad), Math.cos(angleXRad) ]
-            ];
-
-            let rotated = MatrixHelper.matrixMultiplyVector(rotationX, point.originalPos);
-
-            const angleYDegrees = point.rotationY * time;
-            const angleYRad = angleYDegrees * Math.PI / 180;
-            const rotationY = [
-                [ Math.cos(angleYRad), 0, Math.sin(angleYRad) ],
-                [ 0, 1, 0 ],
-                [ -Math.sin(angleYRad), 0, Math.cos(angleYRad) ]
-            ];
-
-            rotated = MatrixHelper.matrixMultiplyVector(rotationY, rotated);
-
-            const angleZDegrees = point.rotationZ * time;
-            const angleZRad = angleZDegrees * Math.PI / 180;
-            const rotationZ = [
-                [ Math.cos(angleZRad), -Math.sin(angleZRad), 0 ],
-                [ Math.sin(angleZRad), Math.cos(angleZRad), 0 ],
-                [ 0, 0, 1 ]
-            ];
-
-            rotated = MatrixHelper.matrixMultiplyVector(rotationZ, rotated);
-
-            const projection = [
-                [1, 0, 0],
-                [0, 1, 0]
-            ];
-
-            let projected = MatrixHelper.matrixMultiplyVector(projection, rotated);
-
-            point.pos = projected;
-            console.log(frameCount, time , angleXDegrees, angleXRad, point.pos)
-        }
-
-        for(const point of points) {
-            point.draw(ctx);
-        }
-
-        // canvas origin
-        ctx.fillStyle = '#fff';
+        // draw canvas origin
+        ctx.fillStyle = '#fff8';
         ctx.beginPath();
         ctx.arc(0, 0, 2, 0, 2 * Math.PI, true);
         ctx.fill();
 
+
+        for(const cube of cubes) {
+            cube.update(time, frameCount);
+            cube.draw(ctx);
+        }
+
         frameCount++;
-        
-        // angleGraus += 0.005;
-        // angleGraus = angleGraus % 360;
         requestAnimationFrame(render);
 
 
