@@ -39,5 +39,5 @@ const homogenousVector = [
     [ 1 ],
 ];
 
-console.log(MatrixHelper.multiply(translation, homogenousVector));
+// console.log(MatrixHelper.multiply(translation, homogenousVector));
 
