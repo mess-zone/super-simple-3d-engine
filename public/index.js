@@ -21,6 +21,23 @@ const b = [
 
 const bvec = new Vector(2, 6, 1)
 
-console.log(MatrixHelper.multiply(a, b));
-console.log(MatrixHelper.matrixMultiplyVector(a, bvec));
+// console.log(MatrixHelper.multiply(a, b));
+// console.log(MatrixHelper.matrixMultiplyVector(a, bvec));
+const [ x, y, z ] = [ 10, 20, 30 ];
+
+const translation = [
+    [ 1, 0, 0, x ],
+    [ 0, 1, 0, y ],
+    [ 0, 0, 1, z ],
+    [ 0, 0, 0, 1 ],
+];
+
+const homogenousVector = [
+    [ 2 ], 
+    [ 6 ], 
+    [ 3 ],
+    [ 1 ],
+];
+
+console.log(MatrixHelper.multiply(translation, homogenousVector));
 
