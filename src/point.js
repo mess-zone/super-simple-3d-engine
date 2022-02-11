@@ -2,20 +2,19 @@ import Vector from "./vector.js";
 
 export default class Point {
     constructor(posX, posY, posZ, radius, color) {
+        this.originalPos = new Vector(posX, posY, posZ);
         this.pos = new Vector(posX, posY, posZ);
         this.radius = radius;
         this.color = color;
-        this.rotationVelocity = {
-            x: 0,
-            y: 0,
-            z: 0,
-        }
+        this.rotationZ = 0;
     }
 
-    setRotationVelocity(x, y, z) {
-        this.rotationVelocity.x = x;
-        this.rotationVelocity.y = y;
-        this.rotationVelocity.z = z;
+    /**
+     * INfinitely rotate object in the z axis
+     * @param {*} velocity velocity of rotation in degrees per second
+     */
+    rotateZ(velocity) {
+        this.rotationZ = velocity; 
     }
 
     draw(ctx) {
