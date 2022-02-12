@@ -1,12 +1,13 @@
 import Vector from "./vector.js";
 import Vertice from "./vertice.js";
+import MatrixHelper from "./matrixHelper.js";
 
 export default class Cube {
     constructor(posX, posY, posZ, size) {
         this.size = size;
 
         this.originalPos = new Vector(posX, posY, posZ);
-        this.pos = new Vector(posX, posY, posZ);
+        this.pos = new Vector(0, 0, 0);
 
         this.appearance = {
             vertices: true,
@@ -20,15 +21,15 @@ export default class Cube {
 
         this.vertices = [];
 
-        this.vertices.push(new Vertice(-size/2, -size/2, -size/2));
-        this.vertices.push(new Vertice(size/2, -size/2, -size/2));
-        this.vertices.push(new Vertice(size/2, size/2, -size/2));
-        this.vertices.push(new Vertice(-size/2, size/2, -size/2));
+        this.vertices.push(new Vertice(-0.5, -0.5, -0.5));
+        this.vertices.push(new Vertice(0.5, -0.5, -0.5));
+        this.vertices.push(new Vertice(0.5, 0.5, -0.5));
+        this.vertices.push(new Vertice(-0.5, 0.5, -0.5));
 
-        this.vertices.push(new Vertice(-size/2, -size/2, size/2));
-        this.vertices.push(new Vertice(size/2, -size/2, size/2));
-        this.vertices.push(new Vertice(size/2, size/2, size/2));
-        this.vertices.push(new Vertice(-size/2, size/2, size/2));
+        this.vertices.push(new Vertice(-0.5, -0.5, 0.5));
+        this.vertices.push(new Vertice(0.5, -0.5, 0.5));
+        this.vertices.push(new Vertice(0.5, 0.5, 0.5));
+        this.vertices.push(new Vertice(-0.5, 0.5, 0.5));
     }
 
     /**
@@ -37,9 +38,9 @@ export default class Cube {
      */
     rotateX(velocity) {
         this.rotationX = velocity; 
-        this.vertices.forEach(vertice => {
-            vertice.rotateX(velocity);
-        });
+        // this.vertices.forEach(vertice => {
+        //     vertice.rotateX(velocity);
+        // });
     }
 
     /**
@@ -48,9 +49,9 @@ export default class Cube {
      */
     rotateY(velocity) {
         this.rotationY = velocity; 
-        this.vertices.forEach(vertice => {
-            vertice.rotateY(velocity);
-        });
+        // this.vertices.forEach(vertice => {
+        //     vertice.rotateY(velocity);
+        // });
     }
 
     /**
@@ -59,9 +60,9 @@ export default class Cube {
      */
     rotateZ(velocity) {
         this.rotationZ = velocity; 
-        this.vertices.forEach(vertice => {
-            vertice.rotateZ(velocity);
-        });
+        // this.vertices.forEach(vertice => {
+        //     vertice.rotateZ(velocity);
+        // });
     }
 
     /**
@@ -70,10 +71,56 @@ export default class Cube {
      * @param {*} frameCount 
      */
     update(time, frameCount) {
-        for(const vertice of this.vertices) {
-            vertice.update(time, frameCount)
-            // console.log(frameCount, time, point.pos)
-        }
+        // FIXIT aplicar rotação num vertice que está no meio do centro de rotação é o equivalente a não rotacionar
+        console.log('cube update', this.originalPos, this.pos)
+
+        const angleXDegrees = this.rotationX * time;
+        const angleXRad = angleXDegrees * Math.PI / 180;
+        const rotationX = [
+            [ 1, 0, 0 ],
+            [ 0, Math.cos(angleXRad), -Math.sin(angleXRad) ],
+            [ 0, Math.sin(angleXRad), Math.cos(angleXRad) ]
+        ];
+
+        let rotated = MatrixHelper.matrixMultiplyVector(rotationX, new Vector(0,0,0));
+
+        const angleYDegrees = this.rotationY * time;
+        const angleYRad = angleYDegrees * Math.PI / 180;
+        const rotationY = [
+            [ Math.cos(angleYRad), 0, Math.sin(angleYRad) ],
+            [ 0, 1, 0 ],
+            [ -Math.sin(angleYRad), 0, Math.cos(angleYRad) ]
+        ];
+
+        rotated = MatrixHelper.matrixMultiplyVector(rotationY, rotated);
+
+        const angleZDegrees = this.rotationZ * time;
+        const angleZRad = angleZDegrees * Math.PI / 180;
+        const rotationZ = [
+            [ Math.cos(angleZRad), -Math.sin(angleZRad), 0 ],
+            [ Math.sin(angleZRad), Math.cos(angleZRad), 0 ],
+            [ 0, 0, 1 ]
+        ];
+
+        rotated = MatrixHelper.matrixMultiplyVector(rotationZ, rotated);
+
+
+        const translateCenter = [
+            [1, 0, 0, this.originalPos.x],
+            [0, 1, 0, this.originalPos.y],
+            [0, 0, 1, this.originalPos.z],
+            [0 ,0, 0, 1]
+        ];
+
+        const homogenousVector = MatrixHelper.vectorToMatrix(rotated);
+        homogenousVector[3] = []
+        homogenousVector[3][0] = 1;
+        let translatedMatriz = MatrixHelper.multiply(translateCenter, homogenousVector);
+        let translated = MatrixHelper.matrixToVector(translatedMatriz);
+
+        this.pos = translated;
+
+
     }
 
     drawVertice(vector, ctx) {
@@ -113,30 +160,94 @@ export default class Cube {
     }
 
     draw(ctx) {
-        if(this.appearance.faces) {
-            this.drawFace(this.vertices[0].pos, this.vertices[1].pos, this.vertices[2].pos, this.vertices[3].pos, ctx);
-            this.drawFace(this.vertices[4].pos, this.vertices[5].pos, this.vertices[6].pos, this.vertices[7].pos, ctx);
+        // if(this.appearance.faces) {
+        //     this.drawFace(this.vertices[0].pos, this.vertices[1].pos, this.vertices[2].pos, this.vertices[3].pos, ctx);
+        //     this.drawFace(this.vertices[4].pos, this.vertices[5].pos, this.vertices[6].pos, this.vertices[7].pos, ctx);
             
-            this.drawFace(this.vertices[0].pos, this.vertices[4].pos, this.vertices[7].pos, this.vertices[3].pos, ctx);
-            this.drawFace(this.vertices[1].pos, this.vertices[5].pos, this.vertices[6].pos, this.vertices[2].pos, ctx);
+        //     this.drawFace(this.vertices[0].pos, this.vertices[4].pos, this.vertices[7].pos, this.vertices[3].pos, ctx);
+        //     this.drawFace(this.vertices[1].pos, this.vertices[5].pos, this.vertices[6].pos, this.vertices[2].pos, ctx);
             
-            this.drawFace(this.vertices[0].pos, this.vertices[1].pos, this.vertices[5].pos, this.vertices[4].pos, ctx);
-            this.drawFace(this.vertices[3].pos, this.vertices[2].pos, this.vertices[6].pos, this.vertices[7].pos, ctx);
-        }
+        //     this.drawFace(this.vertices[0].pos, this.vertices[1].pos, this.vertices[5].pos, this.vertices[4].pos, ctx);
+        //     this.drawFace(this.vertices[3].pos, this.vertices[2].pos, this.vertices[6].pos, this.vertices[7].pos, ctx);
+        // }
 
-        if(this.appearance.edges) {
-            for (let i = 0; i < 4; i++) {
-                this.drawEdge(this.vertices[i].pos, this.vertices[(i + 1) % 4].pos, ctx);
-                this.drawEdge(this.vertices[i + 4].pos, this.vertices[((i + 1) % 4) + 4].pos, ctx);
-                this.drawEdge(this.vertices[i].pos, this.vertices[i + 4].pos, ctx);
-            }
-        }
+        // if(this.appearance.edges) {
+        //     for (let i = 0; i < 4; i++) {
+        //         this.drawEdge(this.vertices[i].pos, this.vertices[(i + 1) % 4].pos, ctx);
+        //         this.drawEdge(this.vertices[i + 4].pos, this.vertices[((i + 1) % 4) + 4].pos, ctx);
+        //         this.drawEdge(this.vertices[i].pos, this.vertices[i + 4].pos, ctx);
+        //     }
+        // }
 
         if(this.appearance.vertices) {
             this.vertices.forEach(vertice => {
-                this.drawVertice(vertice.pos, ctx);
+                const factor = 100;
+                const scale = [
+                    [ factor, 0, 0, 0 ],
+                    [ 0, factor, 0, 0 ],
+                    [ 0, 0, factor, 0 ],
+                    [ 0, 0, 0, 1 ],
+                ];
+
+                let homogenousVector = MatrixHelper.vectorToMatrix(vertice.originalPos);
+                homogenousVector[3] = []
+                homogenousVector[3][0] = 1;
+                let scaledMatriz = MatrixHelper.multiply(scale, homogenousVector);
+                let scaled = MatrixHelper.matrixToVector(scaledMatriz);
+
+
+
+                const translateCenter = [
+                    [ 1, 0, 0, this.originalPos.x ],
+                    [ 0, 1, 0, this.originalPos.y ],
+                    [ 0, 0, 1, this.originalPos.z ],
+                    [ 0 ,0, 0, 1 ]
+                ];
+        
+                homogenousVector = MatrixHelper.vectorToMatrix(scaled);
+                homogenousVector[3] = []
+                homogenousVector[3][0] = 1;
+                let translatedMatriz = MatrixHelper.multiply(translateCenter, homogenousVector);
+                let translated = MatrixHelper.matrixToVector(translatedMatriz);
+
+
+
+
+
+                // translated.multiply(2);
+                console.log(translated)
+
+                this.drawVertice(translated, ctx);
             });
+            console.log('------------')
         }
+
+    }
+
+    // helper
+    drawPos(ctx) {
+        const orthographicProjection = [
+            [ 1, 0, 0 ],
+            [ 0, 1, 0 ]
+        ];
+
+        const distance = 2;
+        const z = 1 / ( distance - this.pos.z);
+
+        const perspectiveProjection = [
+            [ z, 0, 0 ],
+            [ 0, z, 0 ]
+        ];
+
+        let projected2D = MatrixHelper.matrixMultiplyVector(orthographicProjection, this.pos);
+        // console.log('projected2d', projected2D)
+
+        const color = "#f008";
+        const radius = 5;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(projected2D.x, projected2D.y, radius, 0, 2 * Math.PI, true);
+        ctx.fill();
 
     }
 

@@ -14,10 +14,10 @@ export default function createEngine(canvas) {
     function init() {
         console.log('[init]');
 
-        const cube = new Cube(0, 0, 0, 1);
-        cube.rotateX(25);
-        cube.rotateY(75);
-        cube.rotateZ(45);
+        const cube = new Cube(100, 150, -5, 100);
+        // cube.rotateX(25);
+        // cube.rotateY(75);
+        // cube.rotateZ(45);
 
         cubes.push(cube);
         
@@ -28,12 +28,12 @@ export default function createEngine(canvas) {
         time *= 0.001;  // convert time to seconds
         // console.log(frameCount, time);
 
-        // if(time > 1) return;
+        if(time > 1) return;
 
         ctx.resetTransform();
         ctx.clearRect(0, 0, width, height);
         //set canvas origin to center
-        ctx.translate(width/2, height/2);
+        // ctx.translate(width/2, height/2);
 
         // draw canvas origin
         ctx.fillStyle = '#fff8';
@@ -45,6 +45,7 @@ export default function createEngine(canvas) {
         for(const cube of cubes) {
             cube.update(time, frameCount);
             cube.draw(ctx);
+            cube.drawPos(ctx);
         }
 
         frameCount++;
