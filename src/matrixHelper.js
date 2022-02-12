@@ -30,7 +30,7 @@ export default class MatrixHelper {
         let rowsB = b.length;
 
         if(colsA !== rowsB) {
-            console.error('Columns of A must match rows of B');
+            // console.error('Columns of A must match rows of B');
             return null;
         }
 
