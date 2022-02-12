@@ -33,6 +33,12 @@ export default class TransformationChain {
         return this;
     }
 
+    /**
+     * Rotate a vector around x-axis by an angle (in degrees)
+     * 
+     * @param {*} angleXDegrees if positive rotate in clockwise, if negative rotate in anti-clockwise
+     * @returns 
+     */
     rotateX(angleXDegrees) {
         const angleXRad = angleXDegrees * Math.PI / 180;
         const rotationX = [
@@ -46,6 +52,12 @@ export default class TransformationChain {
         return this;
     }
 
+    /**
+     * Rotate a vector around y-axis by an angle (in degrees)
+     * 
+     * @param {*} angleXDegrees if positive rotate in clockwise, if negative rotate in anti-clockwise
+     * @returns 
+     */
     rotateY(angleYDegrees) {
         const angleYRad = angleYDegrees * Math.PI / 180;
         const rotationY = [
@@ -59,6 +71,12 @@ export default class TransformationChain {
         return this;
     }
 
+    /**
+     * Rotate a vector around z-axis by an angle (in degrees)
+     * 
+     * @param {*} angleXDegrees if positive rotate in clockwise, if negative rotate in anti-clockwise
+     * @returns 
+     */
     rotateZ(angleZDegrees) {
         const angleZRad = angleZDegrees * Math.PI / 180;
         const rotationZ = [
