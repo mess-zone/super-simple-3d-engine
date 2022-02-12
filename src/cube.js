@@ -1,6 +1,6 @@
 import Vector from "./vector.js";
 import Vertice from "./vertice.js";
-import MatrixHelper from "./matrixHelper.js";
+import TransformationChain from "./transformationChain.js";
 
 export default class Cube {
     constructor(posX, posY, posZ, size) {
@@ -71,143 +71,31 @@ export default class Cube {
      * @param {*} frameCount 
      */
     update(time, frameCount) {
+        // console.log('cube update', this.originalPos, this.pos)
+       
+        const transformationPosHelper = new TransformationChain(new Vector(0,0,0));
+        
+        // FIXIT aplicar rotação num vertice que está no meio do centro de rotação é o equivalente a não rotacionar
+        this.pos = transformationPosHelper
+            .translate(this.originalPos)
+            .orthographicProjection()
+            .getVector();
+
+
+        // vertices update
         this.vertices.forEach(vertice => {
 
-            // FIX IT scale não funciona depois de trasnlate
-            const scale = [
-                [ this.size, 0, 0, 0 ],
-                [ 0, this.size, 0, 0 ],
-                [ 0, 0, this.size, 0 ],
-                [ 0, 0, 0, 1 ],
-            ];
+            const transformationChain = new TransformationChain(vertice.originalPos);
 
-            let homogenousVector = MatrixHelper.vectorToMatrix(vertice.originalPos);
-            homogenousVector[3] = []
-            homogenousVector[3][0] = 1;
-            let scaledMatriz = MatrixHelper.multiply(scale, homogenousVector);
-            let scaled = MatrixHelper.matrixToVector(scaledMatriz);
-
-
-            const angleXDegrees = this.rotationX * time;
-            const angleXRad = angleXDegrees * Math.PI / 180;
-            const rotationX = [
-                [ 1, 0, 0 ],
-                [ 0, Math.cos(angleXRad), -Math.sin(angleXRad) ],
-                [ 0, Math.sin(angleXRad), Math.cos(angleXRad) ]
-            ];
-    
-            let rotated = MatrixHelper.matrixMultiplyVector(rotationX, scaled);
-
-
-            const angleYDegrees = this.rotationY * time;
-            const angleYRad = angleYDegrees * Math.PI / 180;
-            const rotationY = [
-                [ Math.cos(angleYRad), 0, Math.sin(angleYRad) ],
-                [ 0, 1, 0 ],
-                [ -Math.sin(angleYRad), 0, Math.cos(angleYRad) ]
-            ];
-    
-            rotated = MatrixHelper.matrixMultiplyVector(rotationY, rotated);
-
-
-            const angleZDegrees = this.rotationZ * time;
-            const angleZRad = angleZDegrees * Math.PI / 180;
-            const rotationZ = [
-                [ Math.cos(angleZRad), -Math.sin(angleZRad), 0 ],
-                [ Math.sin(angleZRad), Math.cos(angleZRad), 0 ],
-                [ 0, 0, 1 ]
-            ];
-    
-            rotated = MatrixHelper.matrixMultiplyVector(rotationZ, rotated);
-
-
-
-            const translateCenter = [
-                [ 1, 0, 0, this.originalPos.x ],
-                [ 0, 1, 0, this.originalPos.y ],
-                [ 0, 0, 1, this.originalPos.z ],
-                [ 0 ,0, 0, 1 ]
-            ];
-    
-            homogenousVector = MatrixHelper.vectorToMatrix(rotated);
-            homogenousVector[3] = []
-            homogenousVector[3][0] = 1;
-            let translatedMatriz = MatrixHelper.multiply(translateCenter, homogenousVector);
-            let translated = MatrixHelper.matrixToVector(translatedMatriz);
-
-
-            const orthographicProjection = [
-                [ 1, 0, 0 ],
-                [ 0, 1, 0 ]
-            ];
-    
-            const distance = 2;
-            const z = 1 / ( distance - translated.z);
-    
-            // FIXIT perspective projection does not work after scale
-            const perspectiveProjection = [
-                [ z, 0, 0 ],
-                [ 0, z, 0 ]
-            ];
-    
-            let projected2D = MatrixHelper.matrixMultiplyVector(orthographicProjection, translated);
-
-            vertice.pos = projected2D;
+            vertice.pos = transformationChain
+                .scale(this.size)
+                .rotateX(this.rotationX * time)
+                .rotateY(this.rotationY * time)
+                .rotateZ(this.rotationZ * time)
+                .translate(this.originalPos)
+                .orthographicProjection()
+                .getVector();
         });
-
-
-/////////////////////////////////////////
-
-        // FIXIT aplicar rotação num vertice que está no meio do centro de rotação é o equivalente a não rotacionar
-        console.log('cube update', this.originalPos, this.pos)
-
-        const angleXDegrees = this.rotationX * time;
-        const angleXRad = angleXDegrees * Math.PI / 180;
-        const rotationX = [
-            [ 1, 0, 0 ],
-            [ 0, Math.cos(angleXRad), -Math.sin(angleXRad) ],
-            [ 0, Math.sin(angleXRad), Math.cos(angleXRad) ]
-        ];
-
-        let rotated = MatrixHelper.matrixMultiplyVector(rotationX, new Vector(0,0,0));
-
-        const angleYDegrees = this.rotationY * time;
-        const angleYRad = angleYDegrees * Math.PI / 180;
-        const rotationY = [
-            [ Math.cos(angleYRad), 0, Math.sin(angleYRad) ],
-            [ 0, 1, 0 ],
-            [ -Math.sin(angleYRad), 0, Math.cos(angleYRad) ]
-        ];
-
-        rotated = MatrixHelper.matrixMultiplyVector(rotationY, rotated);
-
-        const angleZDegrees = this.rotationZ * time;
-        const angleZRad = angleZDegrees * Math.PI / 180;
-        const rotationZ = [
-            [ Math.cos(angleZRad), -Math.sin(angleZRad), 0 ],
-            [ Math.sin(angleZRad), Math.cos(angleZRad), 0 ],
-            [ 0, 0, 1 ]
-        ];
-
-        rotated = MatrixHelper.matrixMultiplyVector(rotationZ, rotated);
-
-
-        const translateCenter = [
-            [1, 0, 0, this.originalPos.x],
-            [0, 1, 0, this.originalPos.y],
-            [0, 0, 1, this.originalPos.z],
-            [0 ,0, 0, 1]
-        ];
-
-        const homogenousVector = MatrixHelper.vectorToMatrix(rotated);
-        homogenousVector[3] = []
-        homogenousVector[3][0] = 1;
-        let translatedMatriz = MatrixHelper.multiply(translateCenter, homogenousVector);
-        let translated = MatrixHelper.matrixToVector(translatedMatriz);
-
-        this.pos = translated;
-
-
     }
 
     drawVertice(vector, ctx) {
@@ -270,36 +158,18 @@ export default class Cube {
             this.vertices.forEach(vertice => {
                 this.drawVertice(vertice.pos, ctx);
             });
-            console.log('------------')
         }
 
     }
 
     // helper
     drawPos(ctx) {
-        const orthographicProjection = [
-            [ 1, 0, 0 ],
-            [ 0, 1, 0 ]
-        ];
-
-        const distance = 2;
-        const z = 1 / ( distance - this.pos.z);
-
-        const perspectiveProjection = [
-            [ z, 0, 0 ],
-            [ 0, z, 0 ]
-        ];
-
-        let projected2D = MatrixHelper.matrixMultiplyVector(orthographicProjection, this.pos);
-        // console.log('projected2d', projected2D)
-
         const color = "#f008";
         const radius = 5;
         ctx.fillStyle = color;
         ctx.beginPath();
-        ctx.arc(projected2D.x, projected2D.y, radius, 0, 2 * Math.PI, true);
+        ctx.arc(this.pos.x, this.pos.y, radius, 0, 2 * Math.PI, true);
         ctx.fill();
-
     }
 
 }

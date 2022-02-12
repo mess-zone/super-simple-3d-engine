@@ -1,4 +1,3 @@
-
 import Cube from "./cube.js";
 
 export default function createEngine(canvas) {

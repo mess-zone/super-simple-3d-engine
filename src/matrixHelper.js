@@ -1,5 +1,4 @@
 import Vector from "./vector.js";
-
 export default class MatrixHelper {
 
     constructor() {
