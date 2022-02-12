@@ -474,6 +474,22 @@ describe("MatrixHelper", function () {
     });
 
     describe("#matrixMultiplyVector()", function () {
+        it("should multiply 3D matrix by 3D vector and return a new vector", function() {
+            const matrix = [
+                [ 1, 2, 3 ],
+                [ 4, 5, 6 ],
+                [ 7, 8, 9 ],
+            ];
 
+            const vector = new Vector(9, 6, 3);
+
+            const result = MatrixHelper.matrixMultiplyVector(matrix, vector);
+            
+            const expectedResult = new Vector(30, 84, 138)
+            expect(result).to.deep.equal(expectedResult);
+
+        });
+
+        it("4D multiplication?");
     });
 });
