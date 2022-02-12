@@ -14,7 +14,7 @@ export default function createEngine(canvas) {
     function init() {
         console.log('[init]');
 
-        const cube = new Cube(100, 150, -5, 100);
+        const cube = new Cube(200, 250, -5, 150);
         // cube.rotateX(25);
         // cube.rotateY(75);
         // cube.rotateZ(45);
@@ -28,7 +28,7 @@ export default function createEngine(canvas) {
         time *= 0.001;  // convert time to seconds
         // console.log(frameCount, time);
 
-        if(time > 1) return;
+        // if(time > 1) return;
 
         ctx.resetTransform();
         ctx.clearRect(0, 0, width, height);

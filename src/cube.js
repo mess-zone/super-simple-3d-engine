@@ -181,11 +181,12 @@ export default class Cube {
 
         if(this.appearance.vertices) {
             this.vertices.forEach(vertice => {
-                const factor = 100;
+
+                // FIX IT scale não funciona depois de trasnlate
                 const scale = [
-                    [ factor, 0, 0, 0 ],
-                    [ 0, factor, 0, 0 ],
-                    [ 0, 0, factor, 0 ],
+                    [ this.size, 0, 0, 0 ],
+                    [ 0, this.size, 0, 0 ],
+                    [ 0, 0, this.size, 0 ],
                     [ 0, 0, 0, 1 ],
                 ];
 
@@ -211,13 +212,23 @@ export default class Cube {
                 let translated = MatrixHelper.matrixToVector(translatedMatriz);
 
 
+                const orthographicProjection = [
+                    [ 1, 0, 0 ],
+                    [ 0, 1, 0 ]
+                ];
+        
+                const distance = 2;
+                const z = 1 / ( distance - translated.z);
+        
+                // FIXIT perspective projection does not work after scale
+                const perspectiveProjection = [
+                    [ z, 0, 0 ],
+                    [ 0, z, 0 ]
+                ];
+        
+                let projected2D = MatrixHelper.matrixMultiplyVector(orthographicProjection, translated);
 
-
-
-                // translated.multiply(2);
-                console.log(translated)
-
-                this.drawVertice(translated, ctx);
+                this.drawVertice(projected2D, ctx);
             });
             console.log('------------')
         }
