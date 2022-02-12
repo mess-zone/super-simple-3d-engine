@@ -414,7 +414,7 @@ describe("TransformationChain", function() {
             expect(Math.round(result.y)).to.equal(expectedResult.y);
             expect(Math.round(result.z)).to.equal(expectedResult.z);
         });
-        
+
         it('Rotate by 450 degrees anti-clockwise should be equivalent to rotate by 90 degrees anti-clockwise', function() {
             const vector = new Vector(20, 0, 0);
             const sut = new TransformationChain(vector);
@@ -426,6 +426,107 @@ describe("TransformationChain", function() {
             expect(Math.round(result.x)).to.equal(expectedResult.x);
             expect(Math.round(result.y)).to.equal(expectedResult.y);
             expect(Math.round(result.z)).to.equal(expectedResult.z);
+        });
+    });
+
+    context("Translate transformation", function() {
+        it('Should move by a step from the canvas origin position (0,0,0)', function() {
+            const vector = new Vector(0, 0, 0);
+            const sut = new TransformationChain(vector);
+            
+            const step = new Vector(10, 20, 30);
+    
+            const result = sut.translate(step).getVector();
+            const expectedResult = step;
+            expect(result).to.deep.equal(expectedResult);
+        });
+
+        it('Should move by a step from a vector start position', function() {
+            const vector = new Vector(10, 20, 30);
+            const sut = new TransformationChain(vector);
+            
+            const step = new Vector(65, 40, 15);
+    
+            const result = sut.translate(step).getVector();
+            const expectedResult = new Vector(75, 60, 45);
+            expect(result).to.deep.equal(expectedResult);
+        });
+
+        it('Should not move if the step is (0,0,0)', function() {
+            const vector = new Vector(10, 20, 30);
+            const sut = new TransformationChain(vector);
+            
+            const step = new Vector(0, 0, 0);
+    
+            const result = sut.translate(step).getVector();
+            const expectedResult = vector;
+            expect(result).to.deep.equal(expectedResult);
+        });
+
+        it('Should increment position of a vector in x-axis', function() {
+            const vector = new Vector(10, 0, 0);
+            const sut = new TransformationChain(vector);
+            
+            const step = new Vector(20, 0, 0);
+    
+            const result = sut.translate(step).getVector();
+            const expectedResult = new Vector(30, 0, 0);
+            expect(result).to.deep.equal(expectedResult);
+        });
+
+        it('Should decrement position of a vector in x-axis', function() {
+            const vector = new Vector(10, 0, 0);
+            const sut = new TransformationChain(vector);
+            
+            const step = new Vector(-20, 0, 0);
+    
+            const result = sut.translate(step).getVector();
+            const expectedResult = new Vector(-10, 0, 0);
+            expect(result).to.deep.equal(expectedResult);
+        });
+
+        it('Should increment position of a vector in y-axis', function() {
+            const vector = new Vector(0, 10, 0);
+            const sut = new TransformationChain(vector);
+            
+            const step = new Vector(0, 20, 0);
+    
+            const result = sut.translate(step).getVector();
+            const expectedResult = new Vector(0, 30, 0);
+            expect(result).to.deep.equal(expectedResult);
+        });
+
+        it('Should decrement position of a vector in y-axis', function() {
+            const vector = new Vector(0, 10, 0);
+            const sut = new TransformationChain(vector);
+            
+            const step = new Vector(0, -20, 0);
+    
+            const result = sut.translate(step).getVector();
+            const expectedResult = new Vector(0, -10, 0);
+            expect(result).to.deep.equal(expectedResult);
+        });
+
+        it('Should increment position of a vector in z-axis', function() {
+            const vector = new Vector(0, 0, 10);
+            const sut = new TransformationChain(vector);
+            
+            const step = new Vector(0, 0, 20);
+    
+            const result = sut.translate(step).getVector();
+            const expectedResult = new Vector(0, 0, 30);
+            expect(result).to.deep.equal(expectedResult);
+        });
+
+        it('Should decrement position of a vector in z-axis', function() {
+            const vector = new Vector(0, 0, 10);
+            const sut = new TransformationChain(vector);
+            
+            const step = new Vector(0, 0, -20);
+    
+            const result = sut.translate(step).getVector();
+            const expectedResult = new Vector(0, 0, -10);
+            expect(result).to.deep.equal(expectedResult);
         });
     });
 });

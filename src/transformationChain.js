@@ -5,7 +5,7 @@ export default class TransformationChain {
         this.currentVector = vector;
     }
 
-    // FIX IT scale não funciona depois de translate
+    // FIX IT scale não funciona depois de translate, só funciona se a origin for 0,0,0
     /**
      * Proportionally scale a vector by a factor
      * 
@@ -90,11 +90,18 @@ export default class TransformationChain {
         return this;
     }
 
-    translate(destination) {
+    // FIXIT rotate não funciona depois de translate
+    /**
+     * Translate a position of vector by a step
+     * 
+     * @param {*} step a vector representing a step in 3 dimentions, the values of vector can be negative to invert the direction
+     * @returns 
+     */
+    translate(step) {
         const translate = [
-            [ 1, 0, 0, destination.x ],
-            [ 0, 1, 0, destination.y ],
-            [ 0, 0, 1, destination.z ],
+            [ 1, 0, 0, step.x ],
+            [ 0, 1, 0, step.y ],
+            [ 0, 0, 1, step.z ],
             [ 0 ,0, 0, 1 ]
         ];
 
