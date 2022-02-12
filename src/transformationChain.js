@@ -6,7 +6,17 @@ export default class TransformationChain {
     }
 
     // FIX IT scale não funciona depois de translate
+    /**
+     * Proportionally scale a vector by a factor
+     * 
+     * If factor is 1 or 0, don't change the vector size
+     * If factor is negative, also inverts the vector direction
+     * @param {*} factor must be a positive or negative number different of 0
+     * @returns 
+     */
     scale(factor) {
+        if(factor === 0) return this;
+
         const scale = [
             [ factor, 0, 0, 0 ],
             [ 0, factor, 0, 0 ],
