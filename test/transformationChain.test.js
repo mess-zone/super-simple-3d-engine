@@ -3,6 +3,9 @@ import TransformationChain from "../src/transformationChain.js";
 import Vector from "../src/vector.js";
 
 describe("TransformationChain", function() {
+
+    it("If constructor receive no vector, should start with the canvas center (0,0,0)")
+
     context("Scale transformation", function() {
         it('scale by 0 factor not allowed (keeps the current vector)', function() {
             const vector = new Vector(10, 20, 30);
@@ -529,4 +532,18 @@ describe("TransformationChain", function() {
             expect(result).to.deep.equal(expectedResult);
         });
     });
+
+    context("Orthographic Projection transformation", function() {
+        it("Should return the same input vector but ignore the z value", function() {
+            const vector = new Vector(30, -20, 10);
+            const sut = new TransformationChain(vector);
+    
+            const result = sut.orthographicProjection().getVector();
+            const expectedResult = new Vector(30, -20, 0);
+            expect(result).to.deep.equal(expectedResult);
+        });
+    });
+
+    it("There is a specific order to chain the transformations and actually works");
+    it("Pop, push transformations?");
 });

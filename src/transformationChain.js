@@ -125,20 +125,20 @@ export default class TransformationChain {
         return this;
     }
 
-    // FIXIT perspective projection does not work after scale
-    perspectiveProjection() {
-        const distance = 2;
-        const z = 1 / ( distance - this.currentVector.z);
+    // FIXIT perspective projection does not work after scale and projection should be the last in the chain
+    // perspectiveProjection() {
+    //     const distance = 2;
+    //     const z = 1 / ( distance - this.currentVector.z);
 
-        const perspectiveProjection = [
-            [ z, 0, 0 ],
-            [ 0, z, 0 ]
-        ];
+    //     const perspectiveProjection = [
+    //         [ z, 0, 0 ],
+    //         [ 0, z, 0 ]
+    //     ];
 
-        this.currentVector = MatrixHelper.matrixMultiplyVector(perspectiveProjection, this.currentVector);
+    //     this.currentVector = MatrixHelper.matrixMultiplyVector(perspectiveProjection, this.currentVector);
 
-        return this;
-    }
+    //     return this;
+    // }
 
     getVector() {
         return this.currentVector;
