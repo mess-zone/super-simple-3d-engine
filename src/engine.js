@@ -14,10 +14,10 @@ export default function createEngine(canvas) {
     function init() {
         console.log('[init]');
 
-        const cube = new Cube(200, 250, -5, 150);
-        // cube.rotateX(25);
-        // cube.rotateY(75);
-        // cube.rotateZ(45);
+        const cube = new Cube(250, 250, 50, 150);
+        cube.rotateX(25);
+        cube.rotateY(75);
+        cube.rotateZ(45);
 
         cubes.push(cube);
         
@@ -50,88 +50,6 @@ export default function createEngine(canvas) {
 
         frameCount++;
         requestAnimationFrame(render);
-
-
-        /////////////////////
-
-        // const max = 1;
-        // const min = -1;
-
-        // const angleRad = ((time/10) % 360) * Math.PI / 180;
-        // const angleRad = -1 * Math.PI / 360;
-        // const rotationZ = [
-        //     [Math.cos(angleRad), -Math.sin(angleRad), 0],
-        //     [Math.sin(angleRad), Math.cos(angleRad), 0],
-        //     [0, 0, 1]
-        // ];
-
-        // const projection = [
-        //     [1, 0, 0],
-        //     [0, 1, 0]
-        // ];
-
-        // const translateCenter = [
-        //     [1, 0, 0, width/2],
-        //     [0, 1, 0, height/2],
-        //     [0, 0, 1, 0],
-        //     [0 ,0, 0, 1]
-        // ];
-
-        // const translateDiagonal = [
-        //     [1, 0, 0, steps],
-        //     [0, 1, 0, steps],
-        //     [0, 0, 1, 0],
-        //     [0 ,0, 0, 1],
-        // ];
-          
-
-
-        // for(const point of points) {
-
-        //     const homogenousVector = MatrixHelper.vectorToMatrix(point.pos);
-        //     homogenousVector[3] = []
-        //     homogenousVector[3][0] = 1;
-        //     let translatedMatriz = MatrixHelper.multiply(translateDiagonal, homogenousVector);
-        //     let translated = MatrixHelper.matrixToVector(translatedMatriz);
-
-        //     let rotated = MatrixHelper.matrixMultiplyVector(rotationZ, translated);
-
-        //     let projected = MatrixHelper.matrixMultiplyVector(projection, rotated);
-
-        //     point.pos = projected;
-        //     console.log(frameCount, time , steps, point.pos)
-        // }
-
-        // for(const point of points) {
-        //     // const translateCenter = [
-        //     //     [1, 0, 0, 1],
-        //     //     [0, 1, 0, 1],
-        //     //     [0, 0, 1, 0],
-        //     //     [0 ,0, 0, 1]
-        //     // ];
-
-
-        //     const angleRad = point.rotationVelocity.z;
-        //     const rotationZ = [
-        //         [Math.cos(angleRad), -Math.sin(angleRad), 0],
-        //         [Math.sin(angleRad), Math.cos(angleRad), 0],
-        //         [0, 0, 1]
-        //     ];
-
-        //     // const homogenousVector = MatrixHelper.vectorToMatrix(point.pos);
-        //     // homogenousVector[3] = []
-        //     // homogenousVector[3][0] = 1;
-        //     // let translatedMatriz = MatrixHelper.multiply(translateCenter, homogenousVector);
-        //     // let centered = MatrixHelper.matrixToVector(translatedMatriz);
-
-        //     let rotated = MatrixHelper.matrixMultiplyVector(rotationZ, point.pos);
-
-        //     let projected = MatrixHelper.matrixMultiplyVector(projection, rotated);
-
-        //     point.pos = projected;
-        //     // console.log(frameCount, time , steps, point.pos)
-        // }
-
     }
 
     return {
