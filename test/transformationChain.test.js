@@ -71,7 +71,7 @@ describe("TransformationChain", function() {
         });
     });
 
-    context("RotationX transformation", function() {
+    context("RotateX transformation", function() {
 
         it('Rotate by 0 degrees should not move the vector', function() {
             const vector = new Vector(10, 10, 10);
@@ -185,6 +185,125 @@ describe("TransformationChain", function() {
     
             const result = sut.rotateX(angleXDegrees).getVector();
             const expectedResult = new Vector(0, 0, -20);
+            expect(Math.round(result.x)).to.equal(expectedResult.x);
+            expect(Math.round(result.y)).to.equal(expectedResult.y);
+            expect(Math.round(result.z)).to.equal(expectedResult.z);
+        });
+    });
+
+    context("RotateY transformation", function() {
+        it('Rotate by 0 degrees should not move the vector', function() {
+            const vector = new Vector(10, 10, 10);
+            const sut = new TransformationChain(vector);
+            
+            const angleYDegrees = 0;
+    
+            const result = sut.rotateY(angleYDegrees).getVector();
+            const expectedResult = vector;
+            expect(Math.round(result.x)).to.equal(expectedResult.x);
+            expect(Math.round(result.y)).to.equal(expectedResult.y);
+            expect(Math.round(result.z)).to.equal(expectedResult.z);
+        });
+
+        it('Rotate by 360 degrees should not move the vector', function() {
+            const vector = new Vector(10, 10, 10);
+            const sut = new TransformationChain(vector);
+            
+            const angleYDegrees = 360;
+    
+            const result = sut.rotateY(angleYDegrees).getVector();
+            const expectedResult = vector;
+            expect(Math.round(result.x)).to.equal(expectedResult.x);
+            expect(Math.round(result.y)).to.equal(expectedResult.y);
+            expect(Math.round(result.z)).to.equal(expectedResult.z);
+        });
+
+        it('Rotate by 45 degrees clockwise should move the vector', function() {
+            const vector = new Vector(10, 10, 10);
+            const sut = new TransformationChain(vector);
+            
+            const angleYDegrees = 45;
+    
+            const result = sut.rotateY(angleYDegrees).getVector();
+            const expectedResult = new Vector(14, 10, 0);
+            expect(Math.round(result.x)).to.equal(expectedResult.x);
+            expect(Math.round(result.y)).to.equal(expectedResult.y);
+            expect(Math.round(result.z)).to.equal(expectedResult.z);
+        });
+
+        it('Rotate by 90 degrees clockwise - starting perpendicular to z-axis, should end parallel to z-axis', function() {
+            const vector = new Vector(20, 0, 0);
+            const sut = new TransformationChain(vector);
+            
+            const angleYDegrees = 90;
+    
+            const result = sut.rotateY(angleYDegrees).getVector();
+            const expectedResult = new Vector(0, 0, -20);
+            expect(Math.round(result.x)).to.equal(expectedResult.x);
+            expect(Math.round(result.y)).to.equal(expectedResult.y);
+            expect(Math.round(result.z)).to.equal(expectedResult.z);
+        });
+
+        it('Rotate by 90 degrees clockwise - starting perpendicular to x-axis, should end parallel to x-axis', function() {
+            const vector = new Vector(0, 0, -20);
+            const sut = new TransformationChain(vector);
+            
+            const angleYDegrees = 90;
+    
+            const result = sut.rotateY(angleYDegrees).getVector();
+            const expectedResult = new Vector(-20, 0, 0);
+            expect(Math.round(result.x)).to.equal(expectedResult.x);
+            expect(Math.round(result.y)).to.equal(expectedResult.y);
+            expect(Math.round(result.z)).to.equal(expectedResult.z);
+        });
+
+        it('Rotate by 90 degrees anti-clockwise - starting perpendicular to z-axis, should end parallel to z-axis', function() {
+            const vector = new Vector(20, 0, 0);
+            const sut = new TransformationChain(vector);
+            
+            const angleYDegrees = -90;
+    
+            const result = sut.rotateY(angleYDegrees).getVector();
+            const expectedResult = new Vector(0, 0, 20);
+            expect(Math.round(result.x)).to.equal(expectedResult.x);
+            expect(Math.round(result.y)).to.equal(expectedResult.y);
+            expect(Math.round(result.z)).to.equal(expectedResult.z);
+        });
+
+        it('Rotate by 90 degrees anti-clockwise - starting perpendicular to x-axis, should end parallel to x-axis', function() {
+            const vector = new Vector(0, 0, -20);
+            const sut = new TransformationChain(vector);
+            
+            const angleYDegrees = -90;
+    
+            const result = sut.rotateY(angleYDegrees).getVector();
+            const expectedResult = new Vector(20, 0, 0);
+            expect(Math.round(result.x)).to.equal(expectedResult.x);
+            expect(Math.round(result.y)).to.equal(expectedResult.y);
+            expect(Math.round(result.z)).to.equal(expectedResult.z);
+        });
+
+        it('Rotate by 450 degrees clockwise should be equivalent to rotate by 90 degrees clockwise', function() {
+            const vector = new Vector(20, 0, 0);
+            const sut = new TransformationChain(vector);
+            
+            const angleYDegrees = 450;
+    
+            const result = sut.rotateY(angleYDegrees).getVector();
+            const expectedResult = new Vector(0, 0, -20);
+            expect(Math.round(result.x)).to.equal(expectedResult.x);
+            expect(Math.round(result.y)).to.equal(expectedResult.y);
+            expect(Math.round(result.z)).to.equal(expectedResult.z);
+        });
+
+        it('Rotate by 450 degrees anti-clockwise should be equivalent to rotate by 90 degrees anti-clockwise', function() {
+            const vector = new Vector(20, 0, 0);
+            const sut = new TransformationChain(vector);
+            
+            const angleYDegrees = -450;
+    
+            const result = sut.rotateY(angleYDegrees).getVector();
+            const expectedResult = new Vector(0, 0, 20);
             expect(Math.round(result.x)).to.equal(expectedResult.x);
             expect(Math.round(result.y)).to.equal(expectedResult.y);
             expect(Math.round(result.z)).to.equal(expectedResult.z);
