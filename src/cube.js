@@ -15,9 +15,9 @@ export default class Cube {
             faces: true,
         };
         
-        this.rotationX = 0;
-        this.rotationY = 0;
-        this.rotationZ = 0;
+        this.rotationXVelocity = 0;
+        this.rotationYVelocity = 0;
+        this.rotationZVelocity = 0;
 
         this.vertices = [];
 
@@ -36,10 +36,10 @@ export default class Cube {
      * Infinitely rotate object in the x axis
      * @param {*} velocity velocity of rotation in degrees per second
      */
-    rotateX(velocity) {
-        this.rotationX = velocity; 
+    setRotationXVelocity(velocity) {
+        this.rotationXVelocity = velocity; 
         // this.vertices.forEach(vertice => {
-        //     vertice.rotateX(velocity);
+        //     vertice.setRotationXVelocity(velocity);
         // });
     }
 
@@ -47,10 +47,10 @@ export default class Cube {
      * Infinitely rotate object in the y axis
      * @param {*} velocity velocity of rotation in degrees per second
      */
-    rotateY(velocity) {
-        this.rotationY = velocity; 
+    setRotationYVelocity(velocity) {
+        this.rotationYVelocity = velocity; 
         // this.vertices.forEach(vertice => {
-        //     vertice.rotateY(velocity);
+        //     vertice.setRotationYVelocity(velocity);
         // });
     }
 
@@ -58,10 +58,10 @@ export default class Cube {
      * Infinitely rotate object in the z axis
      * @param {*} velocity velocity of rotation in degrees per second
      */
-    rotateZ(velocity) {
-        this.rotationZ = velocity; 
+    setRotationZVelocity(velocity) {
+        this.rotationZVelocity = velocity; 
         // this.vertices.forEach(vertice => {
-        //     vertice.rotateZ(velocity);
+        //     vertice.setRotationZVelocity(velocity);
         // });
     }
 
@@ -70,8 +70,8 @@ export default class Cube {
      * @param {*} time 
      * @param {*} frameCount 
      */
-    update(time, frameCount) {
-        // console.log('cube update', this.originalPos, this.pos)
+    update(timeframe, time, frameCount) {
+        // console.log('cube update', timeframe)
        
         const transformationPosHelper = new TransformationChain();
         
@@ -87,11 +87,14 @@ export default class Cube {
 
             const transformationChain = new TransformationChain(vertice.originalPos);
 
+            const angleZDegrees = this.rotationZVelocity * time;
+            console.log(this.rotationZVelocity * time, angleZDegrees, timeframe);
+
             vertice.pos = transformationChain
                 .scale(this.size)
-                .rotateX(this.rotationX * time)
-                .rotateY(this.rotationY * time)
-                .rotateZ(this.rotationZ * time)
+                .rotateX(this.rotationXVelocity * time)
+                .rotateY(this.rotationYVelocity * time)
+                .rotateZ(angleZDegrees)
                 .translate(this.originalPos)
                 .orthographicProjection()
                 .getVector();
