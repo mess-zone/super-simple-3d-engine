@@ -102,6 +102,7 @@ export default class VVMesh {
         }
 
         if(this.appearance.edges) {
+            // TODO this method id inefficient, because draws the same edge more than 1 time
             for(const item of this.map) {
                 const [vertice, relations] = item;
                 for(let i = 0; i < relations.length; i++) {
