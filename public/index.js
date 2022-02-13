@@ -1,7 +1,10 @@
 import createEngine from "../src/engine.js";
 
-const canvas = document.querySelector('#canvas');
-const renderer = new createEngine(canvas);
+const vvCanvas = document.querySelector('#vv-canvas');
+const vvRenderer = new createEngine(vvCanvas);
+vvRenderer.init();
 
-renderer.init();
+const fvcanvas = document.querySelector('#fv-canvas');
+const fvRenderer = new createEngine(fvcanvas);
+fvRenderer.init();
 

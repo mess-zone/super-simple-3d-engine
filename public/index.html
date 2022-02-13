@@ -11,13 +11,29 @@
             /* background-color: #888; */
         }
 
-        #canvas {
+        .grid {
+            display: flex;
+        }
+
+        .render-area {
+            padding: 15px;
+        }
+
+        canvas {
             background-color: black;
-            border: 1px solid red;
         }
     </style>
 </head>
 <body>
-    <canvas id="canvas" width="500" height="500"></canvas>
+    <section class="grid">
+        <div class="render-area">
+            <h1>Vertex-vertex mesh</h1>
+            <canvas id="vv-canvas" width="500" height="500"></canvas>
+        </div>
+        <div class="render-area">
+            <h1>Face-vertex mesh</h1>
+            <canvas id="fv-canvas" width="500" height="500"></canvas>
+        </div>
+    </section>
 </body>
 </html>
