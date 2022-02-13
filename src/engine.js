@@ -1,5 +1,4 @@
 import Cube from "./cube.js";
-import RetangularPrims from "./retangularPrism.js";
 
 export default function createEngine(canvas) {
 
@@ -16,17 +15,12 @@ export default function createEngine(canvas) {
     function init() {
         console.log('[init]');
 
-        const cube = new Cube(250, 250, 50, 150);
+        const cube = new Cube(250, 250, 50, 28);
+        cube.scale = 8;
         cube.setRotationXVelocity(25);
         cube.setRotationYVelocity(75);
         cube.setRotationZVelocity(45);
         geometries.push(cube);
-
-        const retangularPrism1 = new RetangularPrims(100, 80, 0, 50);
-        retangularPrism1.setRotationXVelocity(-25);
-        retangularPrism1.setRotationYVelocity(-75);
-        retangularPrism1.setRotationZVelocity(-45);
-        geometries.push(retangularPrism1);
         
         requestAnimationFrame(render);
     }

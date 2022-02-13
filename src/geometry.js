@@ -11,6 +11,7 @@ export default class Geometry {
         };
 
         this.pos = new Vector(posX, posY, posZ);
+        this.scale = 1;
 
         this.rotationXDegree = 0;
         this.rotationYDegree = 0;

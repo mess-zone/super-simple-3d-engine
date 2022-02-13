@@ -6,20 +6,20 @@ export default class Cube extends Geometry {
     constructor(posX, posY, posZ, size) {
         super(posX, posY, posZ);
 
-        // TODO must have a size and a scale factor
+
         this.size = size;
 
         this.mold = [];
 
-        this.mold.push(new Vector(-0.5, -0.5, -0.5));
-        this.mold.push(new Vector(0.5, -0.5, -0.5));
-        this.mold.push(new Vector(0.5, 0.5, -0.5));
-        this.mold.push(new Vector(-0.5, 0.5, -0.5));
+        this.mold.push(new Vector(-this.size/2, -this.size/2, -this.size/2));
+        this.mold.push(new Vector(this.size/2, -this.size/2, -this.size/2));
+        this.mold.push(new Vector(this.size/2, this.size/2, -this.size/2));
+        this.mold.push(new Vector(-this.size/2, this.size/2, -this.size/2));
 
-        this.mold.push(new Vector(-0.5, -0.5, 0.5));
-        this.mold.push(new Vector(0.5, -0.5, 0.5));
-        this.mold.push(new Vector(0.5, 0.5, 0.5));
-        this.mold.push(new Vector(-0.5, 0.5, 0.5));
+        this.mold.push(new Vector(-this.size/2, -this.size/2, this.size/2));
+        this.mold.push(new Vector(this.size/2, -this.size/2, this.size/2));
+        this.mold.push(new Vector(this.size/2, this.size/2, this.size/2));
+        this.mold.push(new Vector(-this.size/2, this.size/2, this.size/2));
 
         this.vertices = [];
 
@@ -47,7 +47,7 @@ export default class Cube extends Geometry {
             const transformationChain = new TransformationChain(this.mold[i]);
     
             this.vertices[i] = transformationChain
-                .scale(this.size)
+                .scale(this.scale)
                 .rotateX(this.rotationXDegree)
                 .rotateY(this.rotationYDegree)
                 .rotateZ(this.rotationZDegree)
