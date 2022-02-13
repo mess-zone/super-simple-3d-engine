@@ -26,7 +26,7 @@ export default class VVMesh {
 
         this.geometry = geometry;
 
-        this.map = this.geometry.deepCopyMap();
+        this.vertexMap = this.geometry.deepCopyMap();
     }
 
     update(timeframe, time, frameCount) {
@@ -37,8 +37,8 @@ export default class VVMesh {
         const scaledGeometyCentroidPos = this.getScaledGeometyCentroidPosition();
       
         // vertices update
-        const verticesIterator = this.map.keys();
-        const geometryIterator = this.geometry.map.keys();
+        const verticesIterator = this.vertexMap.keys();
+        const geometryIterator = this.geometry.vertexMap.keys();
         for(const vertex of verticesIterator) {
             vertex.pos = new TransformationChain(geometryIterator.next().value.pos)
                 .scale(this.scale)
@@ -103,7 +103,7 @@ export default class VVMesh {
 
         if(this.appearance.edges) {
             // TODO this method id inefficient, because draws the same edge more than 1 time
-            for(const item of this.map) {
+            for(const item of this.vertexMap) {
                 const [vertice, relations] = item;
                 for(let i = 0; i < relations.length; i++) {
                     this.drawEdge(vertice.pos, relations[i].pos, "#fff", ctx);
@@ -112,7 +112,7 @@ export default class VVMesh {
         }
 
         if(this.appearance.vertices) {
-            const iterator = this.map.keys();
+            const iterator = this.vertexMap.keys();
             for(const vertex of iterator) {
                 let color = '#fff';
                 if(vertex.name === 'v0') {

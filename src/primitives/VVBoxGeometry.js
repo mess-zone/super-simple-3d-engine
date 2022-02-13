@@ -36,18 +36,18 @@ export default class VVBoxGeometry {
         this.list.push(v8);
         this.list.push(v9);
 
-        this.map = new Map();
+        this.vertexMap = new Map();
 
-        this.map.set(v0, [ v1, v5, v4, v3, v9 ]);
-        this.map.set(v1, [ v2, v6, v5, v0, v9 ]);
-        this.map.set(v2, [ v3, v7, v6, v1, v9 ]);
-        this.map.set(v3, [ v2, v6, v7, v4, v9 ]);
-        this.map.set(v4, [ v5, v0, v3, v7, v8 ]);
-        this.map.set(v5, [ v6, v1, v0, v4, v8 ]);
-        this.map.set(v6, [ v7, v2, v1, v5, v8 ]);
-        this.map.set(v7, [ v4, v3, v2, v6, v8 ]);
-        this.map.set(v8, [ v4, v5, v6, v7 ]);
-        this.map.set(v9, [ v0, v1, v2, v3 ]);
+        this.vertexMap.set(v0, [ v1, v5, v4, v3, v9 ]);
+        this.vertexMap.set(v1, [ v2, v6, v5, v0, v9 ]);
+        this.vertexMap.set(v2, [ v3, v7, v6, v1, v9 ]);
+        this.vertexMap.set(v3, [ v2, v6, v7, v4, v9 ]);
+        this.vertexMap.set(v4, [ v5, v0, v3, v7, v8 ]);
+        this.vertexMap.set(v5, [ v6, v1, v0, v4, v8 ]);
+        this.vertexMap.set(v6, [ v7, v2, v1, v5, v8 ]);
+        this.vertexMap.set(v7, [ v4, v3, v2, v6, v8 ]);
+        this.vertexMap.set(v8, [ v4, v5, v6, v7 ]);
+        this.vertexMap.set(v9, [ v0, v1, v2, v3 ]);
 
     }
 
@@ -58,7 +58,7 @@ export default class VVBoxGeometry {
 
         const list = [];
 
-        const verticesIterator = this.map.keys();
+        const verticesIterator = this.vertexMap.keys();
         for(let vertice of verticesIterator) {
             const v = new Vertex(vertice.pos.x, vertice.pos.y, vertice.pos.z, vertice.name);
             list.push(v);
@@ -66,7 +66,7 @@ export default class VVBoxGeometry {
 
         const copyMap = new Map();
 
-        for(let item of this.map) {
+        for(let item of this.vertexMap) {
             const [ key, relations ] = item;
             const vertex = findVertexByName(key.name, list);
             const rel = [];
