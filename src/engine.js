@@ -1,4 +1,5 @@
-import Cube from "./cube.js";
+import Mesh from "./mesh.js";
+import BoxGeometry from "./primitives/BoxGeometry.js";
 
 export default function createEngine(canvas) {
 
@@ -10,17 +11,26 @@ export default function createEngine(canvas) {
 
     let frameCount = 0;
 
-    let geometries = [];
+    let meshes = [];
 
     function init() {
         console.log('[init]');
 
-        const cube = new Cube(250, 250, 50, 28);
-        cube.scale = 8;
-        cube.setRotationXVelocity(25);
-        cube.setRotationYVelocity(75);
-        cube.setRotationZVelocity(45);
-        geometries.push(cube);
+        const boxGeometry = new BoxGeometry();
+
+        const boxMesh = new Mesh(boxGeometry);
+        boxMesh.scale = 200;
+        boxMesh.pos.x = 250;
+        boxMesh.pos.y = 250;
+        boxMesh.pos.z = 50;
+        // boxMesh.rotationDegree.x = 0;
+        // boxMesh.rotationDegree.y = 0;
+        // boxMesh.rotationDegree.z = 0;
+        boxMesh.rotationVelocity.x = 25;
+        boxMesh.rotationVelocity.y = 75;
+        boxMesh.rotationVelocity.z = 45
+
+        meshes.push(boxMesh);
         
         requestAnimationFrame(render);
     }
@@ -45,10 +55,10 @@ export default function createEngine(canvas) {
         ctx.fill();
 
 
-        for(const geometry of geometries) {
-            geometry.update(timeframe, time, frameCount);
-            geometry.draw(ctx);
-            geometry.drawPos(ctx);
+        for(const mesh of meshes) {
+            mesh.update(timeframe, time, frameCount);
+            mesh.draw(ctx);
+            mesh.drawPos(ctx);
         }
 
         frameCount++;
