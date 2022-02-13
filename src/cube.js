@@ -6,17 +6,29 @@ export default class Cube {
     constructor(posX, posY, posZ, size) {
         this.size = size;
 
+        this.mold = [];
+
+        this.mold.push(new Vertice(-0.5, -0.5, -0.5));
+        this.mold.push(new Vertice(0.5, -0.5, -0.5));
+        this.mold.push(new Vertice(0.5, 0.5, -0.5));
+        this.mold.push(new Vertice(-0.5, 0.5, -0.5));
+
+        this.mold.push(new Vertice(-0.5, -0.5, 0.5));
+        this.mold.push(new Vertice(0.5, -0.5, 0.5));
+        this.mold.push(new Vertice(0.5, 0.5, 0.5));
+        this.mold.push(new Vertice(-0.5, 0.5, 0.5));
+
         this.vertices = [];
 
-        this.vertices.push(new Vertice(-0.5, -0.5, -0.5));
-        this.vertices.push(new Vertice(0.5, -0.5, -0.5));
-        this.vertices.push(new Vertice(0.5, 0.5, -0.5));
-        this.vertices.push(new Vertice(-0.5, 0.5, -0.5));
+        this.vertices.push(new Vertice(0, 0, 0));
+        this.vertices.push(new Vertice(0, 0, 0));
+        this.vertices.push(new Vertice(0, 0, 0));
+        this.vertices.push(new Vertice(0, 0, 0));
 
-        this.vertices.push(new Vertice(-0.5, -0.5, 0.5));
-        this.vertices.push(new Vertice(0.5, -0.5, 0.5));
-        this.vertices.push(new Vertice(0.5, 0.5, 0.5));
-        this.vertices.push(new Vertice(-0.5, 0.5, 0.5));
+        this.vertices.push(new Vertice(0, 0, 0));
+        this.vertices.push(new Vertice(0, 0, 0));
+        this.vertices.push(new Vertice(0, 0, 0));
+        this.vertices.push(new Vertice(0, 0, 0));
 
         this.appearance = {
             vertices: true,
@@ -71,9 +83,9 @@ export default class Cube {
         this.rotationZDegree = this.rotationZVelocity * timeframe + this.rotationZDegree;
 
         // vertices update
-        this.vertices.forEach(vertice => {
+        this.vertices.forEach((vertice, index) => {
 
-            const transformationChain = new TransformationChain(vertice.modelPos);
+            const transformationChain = new TransformationChain(this.mold[index].pos);
 
             vertice.pos = transformationChain
                 .scale(this.size)
