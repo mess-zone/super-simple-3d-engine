@@ -59,6 +59,7 @@ export default function createEngine(canvas) {
             mesh.update(timeframe, time, frameCount);
             mesh.draw(ctx);
             mesh.drawCentroid(ctx);
+            // mesh.drawPos(ctx);
         }
 
         frameCount++;

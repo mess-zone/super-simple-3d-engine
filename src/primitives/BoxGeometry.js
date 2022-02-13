@@ -77,6 +77,6 @@ export default class BoxGeometry {
     }
 
     getCentroid() {
-        return new Vector(-this.boxSize/2, -this.boxSize/2, -this.boxSize/2);
+        return new Vector(this.boxSize/2, this.boxSize/2, this.boxSize/2);
     }
 }
