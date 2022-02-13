@@ -26,46 +26,36 @@ export default class Mesh {
         this.rotationDegree.y = this.rotationVelocity.y * timeframe + this.rotationDegree.y;
         this.rotationDegree.z = this.rotationVelocity.z * timeframe + this.rotationDegree.z;
         
-        const scaledGeometricCentroidPos = this.getScaledGeometricCentroidPosition();
-        const undoTranslate = this.getScaledGeometricCentroidPosition();
-        undoTranslate.x *= -1; 
-        undoTranslate.y *= -1; 
-        undoTranslate.z *= -1; 
-        // console.log(this.pos, scaledGeometricCentroidPos);
+        const scaledGeometyCentroidPos = this.getScaledGeometyCentroidPosition();
       
         // vertices update
         const verticesIterator = this.map.keys();
         const geometryIterator = this.geometry.map.keys();
         for(const vertex of verticesIterator) {
-            // console.log(index, vertex)
-            // console.log(scaledGeometryCentroid)
-            const transformationChain = new TransformationChain(geometryIterator.next().value.pos);
-            vertex.pos = transformationChain
+            vertex.pos = new TransformationChain(geometryIterator.next().value.pos)
                 .scale(this.scale)
                 // change origin to the center of element to rotation around the element
-                .translate(scaledGeometricCentroidPos) 
+                .translate(scaledGeometyCentroidPos) 
                 .rotateX(this.rotationDegree.x)
                 .rotateY(this.rotationDegree.y)
                 .rotateZ(this.rotationDegree.z)
                 // undo change in origin
-                .translate(undoTranslate)
+                .inverseTranslate(scaledGeometyCentroidPos)
                 .translate(this.pos)
                 .orthographicProjection()
                 .getVector();
         }
     }
 
-    drawVertice(vector, ctx) {
-        const color = "#fff";
+    drawVertice(vector, color, ctx) {
         const radius = 5;
-        // ctx.fillStyle = color;
+        ctx.fillStyle = color;
         ctx.beginPath();
         ctx.arc(vector.x, vector.y, radius, 0, 2 * Math.PI, true);
         ctx.fill();
     }
 
-    drawEdge(start, end, ctx) {
-        const color = "#fff";
+    drawEdge(start, end, color, ctx) {
         const strokeWidth = 3;
 
         ctx.strokeStyle = color;
@@ -107,7 +97,7 @@ export default class Mesh {
             for(const item of this.map) {
                 const [vertice, relations] = item;
                 for(let i = 0; i < relations.length; i++) {
-                    this.drawEdge(vertice.pos, relations[i].pos, ctx);
+                    this.drawEdge(vertice.pos, relations[i].pos, "#fff", ctx);
                 }
             }
         }
@@ -115,44 +105,37 @@ export default class Mesh {
         if(this.appearance.vertices) {
             const iterator = this.map.keys();
             for(const vertex of iterator) {
-                ctx.fillStyle = '#fff';
+                let color = '#fff';
                 if(vertex.name === 'v0') {
-                    ctx.fillStyle = '#080';
+                    color = '#080';
                 }
-                this.drawVertice(vertex.pos, ctx);
+                this.drawVertice(vertex.pos, color, ctx);
             }
         }
     }
 
-    getScaledGeometricCentroidPosition() {
+    getScaledGeometyCentroidPosition() {
         return new TransformationChain(this.geometry.getCentroid())
-            .scale(-this.scale)
+            .scale(-this.scale) // TODO create inverseScale transformation?
             .getVector();
     }
 
     getMeshCentroid() {
-        const scaledGeometricCentroidPos = this.getScaledGeometricCentroidPosition();
+        const scaledGeometyCentroidPos = this.getScaledGeometyCentroidPosition();
 
-        const undoTranslate = this.getScaledGeometricCentroidPosition();
-        undoTranslate.x *= -1; 
-        undoTranslate.y *= -1; 
-        undoTranslate.z *= -1; 
-
-        const transformationChain = new TransformationChain(this.geometry.getCentroid());
-        const centroid = transformationChain
+        return new TransformationChain(this.geometry.getCentroid())
                 .scale(this.scale)
                 // change origin to the center of element to rotation around the element
-                .translate(scaledGeometricCentroidPos)
+                .translate(scaledGeometyCentroidPos)
+                // TODO rotation transformation is necessary to calc mesh centroid?
                 .rotateX(this.rotationDegree.x)
                 .rotateY(this.rotationDegree.y)
                 .rotateZ(this.rotationDegree.z)
                 // undo change in origin
-                .translate(undoTranslate)
+                .inverseTranslate(scaledGeometyCentroidPos)
                 .translate(this.pos)
                 .orthographicProjection()
                 .getVector();
-
-        return centroid;
     }
 
     drawCentroid(ctx) {
