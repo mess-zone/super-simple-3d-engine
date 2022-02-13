@@ -542,6 +542,30 @@ describe("TransformationChain", function() {
         });
     });
 
+    context.only("Inverse Translate transformation", function() {
+        it('Should move by a step in inverse direction from the canvas origin position (0,0,0)', function() {
+            const vector = new Vector(0, 0, 0);
+            const sut = new TransformationChain(vector);
+            
+            const step = new Vector(10, 20, 30);
+    
+            const result = sut.inverseTranslate(step).getVector();
+            const expectedResult = step.invert();
+            expect(result).to.deep.equal(expectedResult);
+        });
+
+        it('Should move by a step in inverse direction from a vector start position', function() {
+            const vector = new Vector(10, 20, 30);
+            const sut = new TransformationChain(vector);
+            
+            const step = new Vector(65, 40, 15);
+    
+            const result = sut.inverseTranslate(step).getVector();
+            const expectedResult = new Vector(-55, -20, 15);
+            expect(result).to.deep.equal(expectedResult);
+        });
+    });
+
     context("Orthographic Projection transformation", function() {
         it("Should return the same input vector but ignore the z value", function() {
             const vector = new Vector(30, -20, 10);

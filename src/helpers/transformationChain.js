@@ -116,6 +116,10 @@ export default class TransformationChain {
         return this;
     }
 
+    inverseTranslate(step) {
+        return this.translate(step.invert());
+    }
+
     orthographicProjection() {
         const orthographicProjection = [
             [ 1, 0, 0 ],

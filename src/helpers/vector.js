@@ -6,8 +6,12 @@ export default class Vector {
     }
 
     multiply(scalar) {
-        this.x = this.x * scalar;
-        this.y = this.y * scalar;
-        this.z = this.z * scalar;
+        return new Vector( this.x * scalar,  this.y * scalar,  this.z * scalar)
     }
+
+    invert() {
+        return new Vector(-this.x, -this.y, -this.z);
+    }
+
+
 }
