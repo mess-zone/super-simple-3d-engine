@@ -1,6 +1,3 @@
-import VVMesh from "./VVMesh.js";
-import VVBoxGeometry from "./primitives/vvBoxGeometry.js";
-
 export default function createEngine(canvas) {
 
     let lastTime = 0;
@@ -15,24 +12,11 @@ export default function createEngine(canvas) {
 
     function init() {
         console.log('[init]');
-
-        const boxGeometry = new VVBoxGeometry();
-
-        const boxMesh = new VVMesh(boxGeometry);
-        boxMesh.scale = 100;
-        boxMesh.pos.x = 200;
-        boxMesh.pos.y = 200;
-        boxMesh.pos.z = 50;
-        // boxMesh.rotationDegree.x = 10;
-        // boxMesh.rotationDegree.y = 0;
-        // boxMesh.rotationDegree.z = 0;
-        boxMesh.rotationVelocity.x = 25;
-        boxMesh.rotationVelocity.y = 75;
-        boxMesh.rotationVelocity.z = 45;
-
-        meshes.push(boxMesh);
-        
         requestAnimationFrame(render);
+    }
+
+    function addMesh(mesh) {
+        meshes.push(mesh);
     }
 
     function render(time) {
@@ -68,6 +52,7 @@ export default function createEngine(canvas) {
 
     return {
         init,
+        addMesh,
         render,
     }
 }
