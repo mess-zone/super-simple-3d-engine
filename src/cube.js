@@ -6,23 +6,6 @@ export default class Cube {
     constructor(posX, posY, posZ, size) {
         this.size = size;
 
-        this.originalPos = new Vector(posX, posY, posZ);
-        this.pos = new Vector(0, 0, 0);
-
-        this.appearance = {
-            vertices: true,
-            edges: true,
-            faces: true,
-        };
-        
-        this.rotationXVelocity = 0;
-        this.rotationYVelocity = 0;
-        this.rotationZVelocity = 0;
-
-        this.rotationXDegree = 0;
-        this.rotationYDegree = 0;
-        this.rotationZDegree = 0;
-
         this.vertices = [];
 
         this.vertices.push(new Vertice(-0.5, -0.5, -0.5));
@@ -34,6 +17,22 @@ export default class Cube {
         this.vertices.push(new Vertice(0.5, -0.5, 0.5));
         this.vertices.push(new Vertice(0.5, 0.5, 0.5));
         this.vertices.push(new Vertice(-0.5, 0.5, 0.5));
+
+        this.appearance = {
+            vertices: true,
+            edges: true,
+            faces: true,
+        };
+
+        this.pos = new Vector(posX, posY, posZ);
+
+        this.rotationXDegree = 0;
+        this.rotationYDegree = 0;
+        this.rotationZDegree = 0;
+
+        this.rotationXVelocity = 0;
+        this.rotationYVelocity = 0;
+        this.rotationZVelocity = 0;
     }
 
     /**
@@ -70,7 +69,7 @@ export default class Cube {
     }
 
     /**
-     * Update position based on velocities
+     * Update position and rotation of cube and its vertices
      * @param {*} time 
      * @param {*} frameCount 
      */
@@ -79,14 +78,6 @@ export default class Cube {
         this.rotationXDegree = this.rotationXVelocity * timeframe + this.rotationXDegree;
         this.rotationYDegree = this.rotationYVelocity * timeframe + this.rotationYDegree;
         this.rotationZDegree = this.rotationZVelocity * timeframe + this.rotationZDegree;
-       
-        const transformationPosHelper = new TransformationChain();
-        
-        // FIXIT aplicar rotação num vertice que está no meio do centro de rotação é o equivalente a não rotacionar
-        this.pos = transformationPosHelper
-            .translate(this.originalPos)
-            .orthographicProjection()
-            .getVector();
 
         // vertices update
         this.vertices.forEach(vertice => {
@@ -98,7 +89,7 @@ export default class Cube {
                 .rotateX(this.rotationXDegree)
                 .rotateY(this.rotationYDegree)
                 .rotateZ(this.rotationZDegree)
-                .translate(this.originalPos)
+                .translate(this.pos)
                 .orthographicProjection()
                 .getVector();
         });
