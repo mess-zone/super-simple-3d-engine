@@ -24,17 +24,17 @@ export default class VVBoxGeometry {
         const v8 = new Vertex(.5,.5,1, 'v8');
         const v9 = new Vertex(.5,.5,0, 'v9');
 
-        this.list = [];
-        this.list.push(v0);
-        this.list.push(v1);
-        this.list.push(v2);
-        this.list.push(v3);
-        this.list.push(v4);
-        this.list.push(v5);
-        this.list.push(v6);
-        this.list.push(v7);
-        this.list.push(v8);
-        this.list.push(v9);
+        this.vertexList = [];
+        this.vertexList.push(v0);
+        this.vertexList.push(v1);
+        this.vertexList.push(v2);
+        this.vertexList.push(v3);
+        this.vertexList.push(v4);
+        this.vertexList.push(v5);
+        this.vertexList.push(v6);
+        this.vertexList.push(v7);
+        this.vertexList.push(v8);
+        this.vertexList.push(v9);
 
         this.vertexMap = new Map();
 
@@ -56,22 +56,21 @@ export default class VVBoxGeometry {
             return list.find((vertex) => vertex.name === name);
         }
 
-        const list = [];
-
-        const verticesIterator = this.vertexMap.keys();
-        for(let vertice of verticesIterator) {
-            const v = new Vertex(vertice.pos.x, vertice.pos.y, vertice.pos.z, vertice.name);
-            list.push(v);
+        const vlist = [];
+        for(let vertex of this.vertexList) {
+            // TODO function to deep copy a vertex 
+            vlist.push(new Vertex(vertex.pos.x, vertex.pos.y, vertex.pos.z, vertex.name));
         }
 
         const copyMap = new Map();
 
         for(let item of this.vertexMap) {
             const [ key, relations ] = item;
-            const vertex = findVertexByName(key.name, list);
+            // TODO find a way to copy without relying in the vertex name, witch may not be unique
+            const vertex = findVertexByName(key.name, vlist);
             const rel = [];
             for(let i = 0; i < relations.length; i++) {
-                rel.push(findVertexByName(relations[i].name, list));
+                rel.push(findVertexByName(relations[i].name, vlist));
             }
             copyMap.set(vertex, rel);
         }
