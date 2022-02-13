@@ -2,24 +2,25 @@ import Vector from "./vector.js";
 import TransformationChain from "./transformationChain.js";
 import Geometry from "./geometry.js";
 
-export default class Cube extends Geometry {
+export default class RetangularPrims extends Geometry {
     constructor(posX, posY, posZ, size) {
         super(posX, posY, posZ);
 
-        // TODO must have a size and a scale factor
+        // TODO must have a scale factor and width, height, lenght attributes
         this.size = size;
+        this.lenght = size * 2;
 
         this.mold = [];
 
-        this.mold.push(new Vector(-0.5, -0.5, -0.5));
-        this.mold.push(new Vector(0.5, -0.5, -0.5));
-        this.mold.push(new Vector(0.5, 0.5, -0.5));
-        this.mold.push(new Vector(-0.5, 0.5, -0.5));
+        this.mold.push(new Vector(-0.5, -0.5, -1));
+        this.mold.push(new Vector(0.5, -0.5, -1));
+        this.mold.push(new Vector(0.5, 0.5, -1));
+        this.mold.push(new Vector(-0.5, 0.5, -1));
 
-        this.mold.push(new Vector(-0.5, -0.5, 0.5));
-        this.mold.push(new Vector(0.5, -0.5, 0.5));
-        this.mold.push(new Vector(0.5, 0.5, 0.5));
-        this.mold.push(new Vector(-0.5, 0.5, 0.5));
+        this.mold.push(new Vector(-0.5, -0.5, 1));
+        this.mold.push(new Vector(0.5, -0.5, 1));
+        this.mold.push(new Vector(0.5, 0.5, 1));
+        this.mold.push(new Vector(-0.5, 0.5, 1));
 
         this.vertices = [];
 
