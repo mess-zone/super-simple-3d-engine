@@ -19,16 +19,16 @@ export default function createEngine(canvas) {
         const boxGeometry = new BoxGeometry();
 
         const boxMesh = new Mesh(boxGeometry);
-        boxMesh.scale = 200;
+        boxMesh.scale = 100;
         boxMesh.pos.x = 250;
         boxMesh.pos.y = 250;
         boxMesh.pos.z = 50;
-        // boxMesh.rotationDegree.x = 0;
+        // boxMesh.rotationDegree.x = 20;
         // boxMesh.rotationDegree.y = 0;
         // boxMesh.rotationDegree.z = 0;
         boxMesh.rotationVelocity.x = 25;
         boxMesh.rotationVelocity.y = 75;
-        boxMesh.rotationVelocity.z = 45
+        boxMesh.rotationVelocity.z = 45;
 
         meshes.push(boxMesh);
         

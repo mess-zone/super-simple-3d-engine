@@ -10,14 +10,16 @@ export default class BoxGeometry {
 
         this.mold = [];
 
-        this.mold.push(new Vector(-this.boxSize/2, -this.boxSize/2, -this.boxSize/2));
-        this.mold.push(new Vector(this.boxSize/2, -this.boxSize/2, -this.boxSize/2));
-        this.mold.push(new Vector(this.boxSize/2, this.boxSize/2, -this.boxSize/2));
-        this.mold.push(new Vector(-this.boxSize/2, this.boxSize/2, -this.boxSize/2));
+        this.mold.push(new Vector(0,0,0));
+        this.mold.push(new Vector(1,0,0));
+        this.mold.push(new Vector(1,1,0));
+        this.mold.push(new Vector(0,1,0));
 
-        this.mold.push(new Vector(-this.boxSize/2, -this.boxSize/2, this.boxSize/2));
-        this.mold.push(new Vector(this.boxSize/2, -this.boxSize/2, this.boxSize/2));
-        this.mold.push(new Vector(this.boxSize/2, this.boxSize/2, this.boxSize/2));
-        this.mold.push(new Vector(-this.boxSize/2, this.boxSize/2, this.boxSize/2));
+        this.mold.push(new Vector(0,0,1));
+        this.mold.push(new Vector(1,0,1));
+        this.mold.push(new Vector(1,1,1));
+        this.mold.push(new Vector(0,1,1));
+        this.mold.push(new Vector(.5,.5,1));
+        this.mold.push(new Vector(.5,.5,0));
     }
 }
