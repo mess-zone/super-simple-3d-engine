@@ -11,7 +11,7 @@ export default class Mesh {
         };
 
         this.scale = 1;
-        this.pos = new Vector(0,0,0);
+        this.pos = new Vector(0,0,0); //centroid
         this.rotationDegree = new Vector(0,0,0);
         this.rotationVelocity = new Vector(0,0,0);
 
@@ -108,8 +108,7 @@ export default class Mesh {
         }
     }
 
-    // helper
-    drawPos(ctx) {
+    drawCentroid(ctx) {
         const color = "#f008";
         const radius = 5;
         ctx.fillStyle = color;
