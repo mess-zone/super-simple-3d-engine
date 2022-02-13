@@ -2,6 +2,8 @@ import Cube from "./cube.js";
 
 export default function createEngine(canvas) {
 
+    let lastTime = 0;
+
     const ctx = canvas.getContext("2d");
     const width = 500;
     const height = 500;
@@ -25,9 +27,11 @@ export default function createEngine(canvas) {
 
     function render(time) {
         time *= 0.001;  // convert time to seconds
-        // console.log(frameCount, time);
+        const timeframe = time - lastTime
+        console.log(frameCount, lastTime, time, timeframe);
+        lastTime = time;
 
-        // if(time > 1) return;
+        if(time > 10) return;
 
         ctx.resetTransform();
         ctx.clearRect(0, 0, width, height);
@@ -42,7 +46,7 @@ export default function createEngine(canvas) {
 
 
         for(const cube of cubes) {
-            cube.update(time, frameCount);
+            cube.update(timeframe, time, frameCount);
             cube.draw(ctx);
             cube.drawPos(ctx);
         }
