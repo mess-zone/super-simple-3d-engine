@@ -1,6 +1,6 @@
 import { expect } from "chai";
-import TransformationChain from "../src/transformationChain.js";
-import Vector from "../src/vector.js";
+import TransformationChain from "../src/helpers/transformationChain.js";
+import Vector from "../src/helpers/vector.js";
 
 describe("TransformationChain", function() {
 

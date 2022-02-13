@@ -1,4 +1,4 @@
-import Vector from "../vector.js";
+import Vector from "../helpers/vector.js";
 
 
 export default class BoxGeometry {

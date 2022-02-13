@@ -1,6 +1,6 @@
 import { expect } from "chai";
-import MatrixHelper from "../src/matrixHelper.js";
-import Vector from "../src/vector.js";
+import MatrixHelper from "../src/helpers/matrixHelper.js";
+import Vector from "../src/helpers/vector.js";
 
 describe("MatrixHelper", function () {
     describe("#vectorToMatrix()", function () {

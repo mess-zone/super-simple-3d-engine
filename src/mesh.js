@@ -1,5 +1,5 @@
-import Vector from "./vector.js";
-import TransformationChain from "./transformationChain.js";
+import Vector from "./helpers/vector.js";
+import TransformationChain from "./helpers/transformationChain.js";
 
 export default class Mesh {
     constructor(geometry) {
