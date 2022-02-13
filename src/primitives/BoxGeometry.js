@@ -75,4 +75,8 @@ export default class BoxGeometry {
         return copyMap;
 
     }
+
+    getCentroid() {
+        return new Vector(-this.boxSize/2, -this.boxSize/2, -this.boxSize/2);
+    }
 }

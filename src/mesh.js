@@ -11,7 +11,7 @@ export default class Mesh {
         };
 
         this.scale = 1;
-        this.pos = new Vector(0,0,0); //centroid
+        this.pos = new Vector(0,0,0); //botom left vertice
         this.rotationDegree = new Vector(0,0,0);
         this.rotationVelocity = new Vector(0,0,0);
 
@@ -30,10 +30,14 @@ export default class Mesh {
         const verticesIterator = this.map.keys();
         const geometryIterator = this.geometry.map.keys();
         for(const vertex of verticesIterator) {
+            const geometryCentroid = this.geometry.getCentroid();
+            const scaledGeometryCentroid = new Vector(geometryCentroid.x * this.scale, geometryCentroid.y * this.scale, geometryCentroid.z * this.scale);
             // console.log(index, vertex)
+            // console.log(scaledGeometryCentroid)
             const transformationChain = new TransformationChain(geometryIterator.next().value.pos);
             vertex.pos = transformationChain
                 .scale(this.scale)
+                .translate(scaledGeometryCentroid) // change rotation origin to the center of element
                 .rotateX(this.rotationDegree.x)
                 .rotateY(this.rotationDegree.y)
                 .rotateZ(this.rotationDegree.z)
@@ -105,11 +109,30 @@ export default class Mesh {
             for(const vertex of iterator) {
                 ctx.fillStyle = '#fff';
                 if(vertex.name === 'v0') {
-                    ctx.fillStyle = '#080';
+                    // ctx.fillStyle = '#080';
                 }
                 this.drawVertice(vertex.pos, ctx);
             }
         }
+    }
+
+    getMeshCentroid() {
+
+        const geometryCentroid = this.geometry.getCentroid();
+        const scaledGeometryCentroid = new Vector(-geometryCentroid.x * this.scale, -geometryCentroid.y * this.scale, -geometryCentroid.z * this.scale);
+
+        const transformationChain = new TransformationChain(this.geometry.getCentroid());
+        const centroid = transformationChain
+                .scale(this.scale)
+                .translate(scaledGeometryCentroid) // change rotation origin to the cente of element
+                .rotateX(this.rotationDegree.x)
+                .rotateY(this.rotationDegree.y)
+                .rotateZ(this.rotationDegree.z)
+                .translate(this.pos)
+                .orthographicProjection()
+                .getVector();
+
+        return centroid;
     }
 
     drawCentroid(ctx) {
@@ -117,7 +140,8 @@ export default class Mesh {
         const radius = 5;
         ctx.fillStyle = color;
         ctx.beginPath();
-        ctx.arc(this.pos.x, this.pos.y, radius, 0, 2 * Math.PI, true);
+        const centroid = this.getMeshCentroid();
+        ctx.arc(centroid.x, centroid.y, radius, 0, 2 * Math.PI, true);
         ctx.fill();
     }
 
