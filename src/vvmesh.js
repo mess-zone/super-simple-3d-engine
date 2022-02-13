@@ -26,7 +26,9 @@ export default class VVMesh {
 
         this.geometry = geometry;
 
-        this.vertexMap = this.geometry.deepCopyMap();
+        this.vertexList = [];
+        this.vertexMap = new Map();
+        this.geometry.buildMap(this.vertexList, this.vertexMap);
     }
 
     update(timeframe, time, frameCount) {

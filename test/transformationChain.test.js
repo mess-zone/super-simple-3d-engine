@@ -542,7 +542,7 @@ describe("TransformationChain", function() {
         });
     });
 
-    context.only("Inverse Translate transformation", function() {
+    context("Inverse Translate transformation", function() {
         it('Should move by a step in inverse direction from the canvas origin position (0,0,0)', function() {
             const vector = new Vector(0, 0, 0);
             const sut = new TransformationChain(vector);
