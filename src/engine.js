@@ -1,5 +1,5 @@
 import VVMesh from "./VVMesh.js";
-import VVBoxGeometry from "./primitives/_vvBoxGeometry.js";
+import VVBoxGeometry from "./primitives/vvBoxGeometry.js";
 
 export default function createEngine(canvas) {
 

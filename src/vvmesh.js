@@ -23,12 +23,9 @@ export default class VVMesh {
         this.rotationDegree = new Vector(0,0,0);
         this.rotationVelocity = new Vector(0,0,0);
 
-
         this.geometry = geometry;
-
-        this.vertexList = [];
         this.vertexMap = new Map();
-        this.geometry.buildMap(this.vertexList, this.vertexMap);
+        this.geometry.cloneData(this.vertexMap);
     }
 
     update(timeframe, time, frameCount) {
@@ -104,7 +101,7 @@ export default class VVMesh {
         }
 
         if(this.appearance.edges) {
-            // TODO this method id inefficient, because draws the same edge more than 1 time
+            // TODO this method is inefficient, because draws the same edge more than 1 time
             for(const item of this.vertexMap) {
                 const [vertice, relations] = item;
                 for(let i = 0; i < relations.length; i++) {
