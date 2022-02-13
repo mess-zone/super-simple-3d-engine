@@ -11,7 +11,7 @@ export default class Mesh {
         };
 
         this.scale = 1;
-        this.pos = new Vector(0,0,0); //botom left vertice
+        this.pos = new Vector(0,0,0);
         this.rotationDegree = new Vector(0,0,0);
         this.rotationVelocity = new Vector(0,0,0);
 
@@ -25,8 +25,13 @@ export default class Mesh {
         this.rotationDegree.x = this.rotationVelocity.x * timeframe + this.rotationDegree.x;
         this.rotationDegree.y = this.rotationVelocity.y * timeframe + this.rotationDegree.y;
         this.rotationDegree.z = this.rotationVelocity.z * timeframe + this.rotationDegree.z;
-
+        
         const scaledGeometricCentroidPos = this.getScaledGeometricCentroidPosition();
+        const undoTranslate = this.getScaledGeometricCentroidPosition();
+        undoTranslate.x *= -1; 
+        undoTranslate.y *= -1; 
+        undoTranslate.z *= -1; 
+        // console.log(this.pos, scaledGeometricCentroidPos);
       
         // vertices update
         const verticesIterator = this.map.keys();
@@ -37,10 +42,13 @@ export default class Mesh {
             const transformationChain = new TransformationChain(geometryIterator.next().value.pos);
             vertex.pos = transformationChain
                 .scale(this.scale)
-                .translate(scaledGeometricCentroidPos) // change rotation origin to the center of element
+                // change origin to the center of element to rotation around the element
+                .translate(scaledGeometricCentroidPos) 
                 .rotateX(this.rotationDegree.x)
                 .rotateY(this.rotationDegree.y)
                 .rotateZ(this.rotationDegree.z)
+                // undo change in origin
+                .translate(undoTranslate)
                 .translate(this.pos)
                 .orthographicProjection()
                 .getVector();
@@ -109,7 +117,7 @@ export default class Mesh {
             for(const vertex of iterator) {
                 ctx.fillStyle = '#fff';
                 if(vertex.name === 'v0') {
-                    // ctx.fillStyle = '#080';
+                    ctx.fillStyle = '#080';
                 }
                 this.drawVertice(vertex.pos, ctx);
             }
@@ -125,13 +133,21 @@ export default class Mesh {
     getMeshCentroid() {
         const scaledGeometricCentroidPos = this.getScaledGeometricCentroidPosition();
 
+        const undoTranslate = this.getScaledGeometricCentroidPosition();
+        undoTranslate.x *= -1; 
+        undoTranslate.y *= -1; 
+        undoTranslate.z *= -1; 
+
         const transformationChain = new TransformationChain(this.geometry.getCentroid());
         const centroid = transformationChain
                 .scale(this.scale)
-                .translate(scaledGeometricCentroidPos) // change rotation origin to the cente of element
+                // change origin to the center of element to rotation around the element
+                .translate(scaledGeometricCentroidPos)
                 .rotateX(this.rotationDegree.x)
                 .rotateY(this.rotationDegree.y)
                 .rotateZ(this.rotationDegree.z)
+                // undo change in origin
+                .translate(undoTranslate)
                 .translate(this.pos)
                 .orthographicProjection()
                 .getVector();
@@ -141,7 +157,7 @@ export default class Mesh {
 
     drawCentroid(ctx) {
         const color = "#f008";
-        const radius = 5;
+        const radius = 2;
         ctx.fillStyle = color;
         ctx.beginPath();
         const centroid = this.getMeshCentroid();
@@ -149,13 +165,13 @@ export default class Mesh {
         ctx.fill();
     }
 
-    // drawPos(ctx) {
-    //     const color = "#0808";
-    //     const radius = 5;
-    //     ctx.fillStyle = color;
-    //     ctx.beginPath();
-    //     ctx.arc(this.pos.x, this.pos.y, radius, 0, 2 * Math.PI, true);
-    //     ctx.fill();
-    // }
+    drawPos(ctx) {
+        const color = "#00f8";
+        const radius = 10;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(this.pos.x, this.pos.y, radius, 0, 2 * Math.PI, true);
+        ctx.fill();
+    }
 
 }
