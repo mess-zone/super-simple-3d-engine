@@ -10,7 +10,7 @@ export default function createEngine(canvas) {
 
     let frameCount = 0;
 
-    let cubes = [];
+    let geometries = [];
 
     function init() {
         console.log('[init]');
@@ -20,7 +20,7 @@ export default function createEngine(canvas) {
         cube.setRotationYVelocity(75);
         cube.setRotationZVelocity(45);
 
-        cubes.push(cube);
+        geometries.push(cube);
         
         requestAnimationFrame(render);
     }
@@ -45,10 +45,10 @@ export default function createEngine(canvas) {
         ctx.fill();
 
 
-        for(const cube of cubes) {
-            cube.update(timeframe, time, frameCount);
-            cube.draw(ctx);
-            cube.drawPos(ctx);
+        for(const geometry of geometries) {
+            geometry.update(timeframe, time, frameCount);
+            geometry.draw(ctx);
+            geometry.drawPos(ctx);
         }
 
         frameCount++;
