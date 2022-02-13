@@ -75,7 +75,10 @@ export default class Cube {
      * @param {*} frameCount 
      */
     update(timeframe, time, frameCount) {
-        console.log('cube update', frameCount)
+        // console.log('cube update', frameCount)
+        this.rotationXDegree = this.rotationXVelocity * timeframe + this.rotationXDegree;
+        this.rotationYDegree = this.rotationYVelocity * timeframe + this.rotationYDegree;
+        this.rotationZDegree = this.rotationZVelocity * timeframe + this.rotationZDegree;
        
         const transformationPosHelper = new TransformationChain();
         
@@ -85,14 +88,6 @@ export default class Cube {
             .orthographicProjection()
             .getVector();
 
-        const angleZDegrees = this.rotationZVelocity * time;
-        console.log(this.rotationZVelocity * time, angleZDegrees, timeframe);
-
-        this.rotationXDegree = this.rotationXVelocity * time;
-        this.rotationYDegree = this.rotationYVelocity * time;
-        this.rotationZDegree = this.rotationZVelocity * time;
-
-
         // vertices update
         this.vertices.forEach(vertice => {
 
@@ -100,9 +95,9 @@ export default class Cube {
 
             vertice.pos = transformationChain
                 .scale(this.size)
-                .rotateX(this.rotationXVelocity * time)
-                .rotateY(this.rotationYVelocity * time)
-                .rotateZ(angleZDegrees)
+                .rotateX(this.rotationXDegree)
+                .rotateY(this.rotationYDegree)
+                .rotateZ(this.rotationZDegree)
                 .translate(this.originalPos)
                 .orthographicProjection()
                 .getVector();

@@ -16,8 +16,8 @@ export default function createEngine(canvas) {
         console.log('[init]');
 
         const cube = new Cube(250, 250, 50, 150);
-        // cube.setRotationXVelocity(25);
-        // cube.setRotationYVelocity(75);
+        cube.setRotationXVelocity(25);
+        cube.setRotationYVelocity(75);
         cube.setRotationZVelocity(45);
 
         cubes.push(cube);
