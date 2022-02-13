@@ -1,5 +1,4 @@
 import Vector from "./vector.js";
-import Vertice from "./vertice.js";
 import TransformationChain from "./transformationChain.js";
 
 export default class Cube {
@@ -8,27 +7,27 @@ export default class Cube {
 
         this.mold = [];
 
-        this.mold.push(new Vertice(-0.5, -0.5, -0.5));
-        this.mold.push(new Vertice(0.5, -0.5, -0.5));
-        this.mold.push(new Vertice(0.5, 0.5, -0.5));
-        this.mold.push(new Vertice(-0.5, 0.5, -0.5));
+        this.mold.push(new Vector(-0.5, -0.5, -0.5));
+        this.mold.push(new Vector(0.5, -0.5, -0.5));
+        this.mold.push(new Vector(0.5, 0.5, -0.5));
+        this.mold.push(new Vector(-0.5, 0.5, -0.5));
 
-        this.mold.push(new Vertice(-0.5, -0.5, 0.5));
-        this.mold.push(new Vertice(0.5, -0.5, 0.5));
-        this.mold.push(new Vertice(0.5, 0.5, 0.5));
-        this.mold.push(new Vertice(-0.5, 0.5, 0.5));
+        this.mold.push(new Vector(-0.5, -0.5, 0.5));
+        this.mold.push(new Vector(0.5, -0.5, 0.5));
+        this.mold.push(new Vector(0.5, 0.5, 0.5));
+        this.mold.push(new Vector(-0.5, 0.5, 0.5));
 
         this.vertices = [];
 
-        this.vertices.push(new Vertice(0, 0, 0));
-        this.vertices.push(new Vertice(0, 0, 0));
-        this.vertices.push(new Vertice(0, 0, 0));
-        this.vertices.push(new Vertice(0, 0, 0));
+        this.vertices.push(new Vector(0, 0, 0));
+        this.vertices.push(new Vector(0, 0, 0));
+        this.vertices.push(new Vector(0, 0, 0));
+        this.vertices.push(new Vector(0, 0, 0));
 
-        this.vertices.push(new Vertice(0, 0, 0));
-        this.vertices.push(new Vertice(0, 0, 0));
-        this.vertices.push(new Vertice(0, 0, 0));
-        this.vertices.push(new Vertice(0, 0, 0));
+        this.vertices.push(new Vector(0, 0, 0));
+        this.vertices.push(new Vector(0, 0, 0));
+        this.vertices.push(new Vector(0, 0, 0));
+        this.vertices.push(new Vector(0, 0, 0));
 
         this.appearance = {
             vertices: true,
@@ -83,11 +82,10 @@ export default class Cube {
         this.rotationZDegree = this.rotationZVelocity * timeframe + this.rotationZDegree;
 
         // vertices update
-        this.vertices.forEach((vertice, index) => {
-
-            const transformationChain = new TransformationChain(this.mold[index].pos);
-
-            vertice.pos = transformationChain
+        for(let i = 0; i < this.vertices.length; i++) {
+            const transformationChain = new TransformationChain(this.mold[i]);
+    
+            this.vertices[i] = transformationChain
                 .scale(this.size)
                 .rotateX(this.rotationXDegree)
                 .rotateY(this.rotationYDegree)
@@ -95,7 +93,7 @@ export default class Cube {
                 .translate(this.pos)
                 .orthographicProjection()
                 .getVector();
-        });
+        }
     }
 
     drawVertice(vector, ctx) {
@@ -136,27 +134,27 @@ export default class Cube {
 
     draw(ctx) {
         if(this.appearance.faces) {
-            this.drawFace(this.vertices[0].pos, this.vertices[1].pos, this.vertices[2].pos, this.vertices[3].pos, ctx);
-            this.drawFace(this.vertices[4].pos, this.vertices[5].pos, this.vertices[6].pos, this.vertices[7].pos, ctx);
+            this.drawFace(this.vertices[0], this.vertices[1], this.vertices[2], this.vertices[3], ctx);
+            this.drawFace(this.vertices[4], this.vertices[5], this.vertices[6], this.vertices[7], ctx);
             
-            this.drawFace(this.vertices[0].pos, this.vertices[4].pos, this.vertices[7].pos, this.vertices[3].pos, ctx);
-            this.drawFace(this.vertices[1].pos, this.vertices[5].pos, this.vertices[6].pos, this.vertices[2].pos, ctx);
+            this.drawFace(this.vertices[0], this.vertices[4], this.vertices[7], this.vertices[3], ctx);
+            this.drawFace(this.vertices[1], this.vertices[5], this.vertices[6], this.vertices[2], ctx);
             
-            this.drawFace(this.vertices[0].pos, this.vertices[1].pos, this.vertices[5].pos, this.vertices[4].pos, ctx);
-            this.drawFace(this.vertices[3].pos, this.vertices[2].pos, this.vertices[6].pos, this.vertices[7].pos, ctx);
+            this.drawFace(this.vertices[0], this.vertices[1], this.vertices[5], this.vertices[4], ctx);
+            this.drawFace(this.vertices[3], this.vertices[2], this.vertices[6], this.vertices[7], ctx);
         }
 
         if(this.appearance.edges) {
             for (let i = 0; i < 4; i++) {
-                this.drawEdge(this.vertices[i].pos, this.vertices[(i + 1) % 4].pos, ctx);
-                this.drawEdge(this.vertices[i + 4].pos, this.vertices[((i + 1) % 4) + 4].pos, ctx);
-                this.drawEdge(this.vertices[i].pos, this.vertices[i + 4].pos, ctx);
+                this.drawEdge(this.vertices[i], this.vertices[(i + 1) % 4], ctx);
+                this.drawEdge(this.vertices[i + 4], this.vertices[((i + 1) % 4) + 4], ctx);
+                this.drawEdge(this.vertices[i], this.vertices[i + 4], ctx);
             }
         }
 
         if(this.appearance.vertices) {
-            this.vertices.forEach(vertice => {
-                this.drawVertice(vertice.pos, ctx);
+            this.vertices.forEach(vector => {
+                this.drawVertice(vector, ctx);
             });
         }
 
