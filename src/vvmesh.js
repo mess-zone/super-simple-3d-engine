@@ -1,7 +1,15 @@
 import Vector from "./helpers/vector.js";
 import TransformationChain from "./helpers/transformationChain.js";
 
-export default class Mesh {
+/**
+ * Vertex-vertex mesh
+ * 
+ * Represent an object as a set of vertices connected to other vertices. 
+ * This is the simplest representation, but not widely used since the face and edge information is implicit. 
+ * Thus, it is necessary to traverse the data in order to generate a list of faces for rendering. 
+ * In addition, operations on edges and faces are not easily accomplished.
+ */
+export default class VVMesh {
     constructor(geometry) {
 
         this.appearance = {

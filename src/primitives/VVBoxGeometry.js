@@ -1,8 +1,12 @@
 import Vector from "../helpers/vector.js";
 import Vertex from "../vertex.js";
 
-
-export default class BoxGeometry {
+/**
+ * Primitive 3D shape representing a simple Box
+ * 
+ * Uses the Vertex-vertex mesh to represent the data
+ */
+export default class VVBoxGeometry {
     constructor() {
         this.boxSize = 1;
         // this.boxWidth = 1;

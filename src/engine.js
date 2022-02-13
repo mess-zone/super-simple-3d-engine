@@ -1,5 +1,5 @@
-import Mesh from "./mesh.js";
-import BoxGeometry from "./primitives/BoxGeometry.js";
+import VVMesh from "./VVMesh.js";
+import VVBoxGeometry from "./primitives/vvBoxGeometry.js";
 
 export default function createEngine(canvas) {
 
@@ -16,9 +16,9 @@ export default function createEngine(canvas) {
     function init() {
         console.log('[init]');
 
-        const boxGeometry = new BoxGeometry();
+        const boxGeometry = new VVBoxGeometry();
 
-        const boxMesh = new Mesh(boxGeometry);
+        const boxMesh = new VVMesh(boxGeometry);
         boxMesh.scale = 100;
         boxMesh.pos.x = 200;
         boxMesh.pos.y = 200;
