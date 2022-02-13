@@ -40,10 +40,7 @@ export default class Cube {
      * @param {*} velocity velocity of rotation in degrees per second
      */
     setRotationXVelocity(velocity) {
-        this.rotationXVelocity = velocity; 
-        // this.vertices.forEach(vertice => {
-        //     vertice.setRotationXVelocity(velocity);
-        // });
+        this.rotationXVelocity = velocity;
     }
 
     /**
@@ -51,10 +48,7 @@ export default class Cube {
      * @param {*} velocity velocity of rotation in degrees per second
      */
     setRotationYVelocity(velocity) {
-        this.rotationYVelocity = velocity; 
-        // this.vertices.forEach(vertice => {
-        //     vertice.setRotationYVelocity(velocity);
-        // });
+        this.rotationYVelocity = velocity;
     }
 
     /**
@@ -62,10 +56,7 @@ export default class Cube {
      * @param {*} velocity velocity of rotation in degrees per second
      */
     setRotationZVelocity(velocity) {
-        this.rotationZVelocity = velocity; 
-        // this.vertices.forEach(vertice => {
-        //     vertice.setRotationZVelocity(velocity);
-        // });
+        this.rotationZVelocity = velocity;
     }
 
     /**
@@ -82,7 +73,7 @@ export default class Cube {
         // vertices update
         this.vertices.forEach(vertice => {
 
-            const transformationChain = new TransformationChain(vertice.originalPos);
+            const transformationChain = new TransformationChain(vertice.modelPos);
 
             vertice.pos = transformationChain
                 .scale(this.size)
