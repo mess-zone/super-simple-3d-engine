@@ -4,7 +4,16 @@ import Vector from "../src/vector.js";
 
 describe("TransformationChain", function() {
 
-    it("If constructor receive no vector, should start with the canvas center (0,0,0)")
+    it("If constructor receive no vector, should start with the canvas center (0,0,0)", function() {
+        const sut = new TransformationChain();
+
+        const result = sut.getVector();
+        const expectedResult = new Vector(0,0,0);
+        expect(result).to.deep.equal(expectedResult);
+    })
+
+    it("There is a specific order to chain the transformations and actually works");
+    it("Pop, push transformations?");
 
     context("Scale transformation", function() {
         it('scale by 0 factor not allowed (keeps the current vector)', function() {
@@ -543,7 +552,4 @@ describe("TransformationChain", function() {
             expect(result).to.deep.equal(expectedResult);
         });
     });
-
-    it("There is a specific order to chain the transformations and actually works");
-    it("Pop, push transformations?");
 });

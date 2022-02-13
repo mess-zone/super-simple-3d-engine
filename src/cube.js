@@ -73,7 +73,7 @@ export default class Cube {
     update(time, frameCount) {
         // console.log('cube update', this.originalPos, this.pos)
        
-        const transformationPosHelper = new TransformationChain(new Vector(0,0,0));
+        const transformationPosHelper = new TransformationChain();
         
         // FIXIT aplicar rotação num vertice que está no meio do centro de rotação é o equivalente a não rotacionar
         this.pos = transformationPosHelper

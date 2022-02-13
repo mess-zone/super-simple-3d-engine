@@ -1,8 +1,9 @@
 import MatrixHelper from "./matrixHelper.js";
+import Vector from "./vector.js";
 
 export default class TransformationChain {
     constructor(vector) {
-        this.currentVector = vector;
+        this.currentVector = vector || new Vector(0,0,0);
     }
 
     // FIX IT scale não funciona depois de translate, só funciona se a origin for 0,0,0
