@@ -25,6 +25,7 @@ export default class TransformationChain {
             [ 0, 0, 0, 1 ],
         ];
 
+        // TODO create homogenousVector class and homogenous matrices?
         const homogenousVector = MatrixHelper.vectorToMatrix(this.currentVector);
         homogenousVector[3] = []
         homogenousVector[3][0] = 1;
