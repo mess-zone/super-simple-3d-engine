@@ -13,15 +13,15 @@ export default class FVBoxGeometry {
         // this.boxHeight = 1;
         // this.boxDepth = 1;
 
-        this.faceList = [];
-        this.vertexMap = new Map();
-        this.cloneData(this.faceList, this.vertexMap);
+        const { faceList, vertexMap } = this.cloneData();
+        this.faceList = faceList;
+        this.vertexMap = vertexMap;
     }
 
     /**
      * Populate a faceList and a vertex map
      */
-    cloneData(faceList, vertexMap) {
+    cloneData() {
         //vertices
         const v0 = new Vertex(0,0,0, 'v0');
         const v1 = new Vertex(1,0,0, 'v1');
@@ -60,6 +60,7 @@ export default class FVBoxGeometry {
         const f15 = [ v9, v0, v3 ];
 
         // faceList
+        const faceList = [];
         faceList.push(f0);
         faceList.push(f1);
         faceList.push(f2);
@@ -78,6 +79,7 @@ export default class FVBoxGeometry {
         faceList.push(f15);
 
         //vertexMap
+        const vertexMap = new Map();
         vertexMap.set(v0, [ f0, f1, f7, f12, f15 ]);
         vertexMap.set(v1, [ f1, f2, f3, f12, f13 ]);
         vertexMap.set(v2, [ f3, f4, f5, f13, f14 ]);
@@ -88,6 +90,11 @@ export default class FVBoxGeometry {
         vertexMap.set(v7, [ f4, f5, f6, f10, f11 ]);
         vertexMap.set(v8, [ f8, f9, f10, f11 ]);
         vertexMap.set(v9, [ f12, f13, f14, f15 ]);
+
+        return {
+            faceList,
+            vertexMap,
+        }
     }
 
     getCentroid() {

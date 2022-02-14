@@ -24,8 +24,8 @@ export default class VVMesh {
         this.rotationVelocity = new Vector(0,0,0);
 
         this.geometry = geometry;
-        this.vertexMap = new Map();
-        this.geometry.cloneData(this.vertexMap);
+        const { vertexMap } = this.geometry.cloneData();
+        this.vertexMap = vertexMap;
     }
 
     update(timeframe, time, frameCount) {

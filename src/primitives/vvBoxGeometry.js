@@ -13,14 +13,14 @@ export default class VVBoxGeometry {
         // this.boxHeight = 1;
         // this.boxDepth = 1;
 
-        this.vertexMap = new Map();
-        this.cloneData(this.vertexMap);
+        const { vertexMap } = this.cloneData();
+        this.vertexMap = vertexMap;
     }
 
     /**
      * Populate a vertex map
      */
-    cloneData(vertexMap) {
+    cloneData() {
         const v0 = new Vertex(0,0,0, 'v0');
         const v1 = new Vertex(1,0,0, 'v1');
         const v2 = new Vertex(1,1,0, 'v2');
@@ -32,6 +32,7 @@ export default class VVBoxGeometry {
         const v8 = new Vertex(.5,.5,1, 'v8');
         const v9 = new Vertex(.5,.5,0, 'v9');
 
+        const vertexMap = new Map();
         vertexMap.set(v0, [ v1, v5, v4, v3, v9 ]);
         vertexMap.set(v1, [ v2, v6, v5, v0, v9 ]);
         vertexMap.set(v2, [ v3, v7, v6, v1, v9 ]);
@@ -42,6 +43,10 @@ export default class VVBoxGeometry {
         vertexMap.set(v7, [ v4, v3, v2, v6, v8 ]);
         vertexMap.set(v8, [ v4, v5, v6, v7 ]);
         vertexMap.set(v9, [ v0, v1, v2, v3 ]);
+
+        return {
+            vertexMap
+        }
     }
 
     getCentroid() {

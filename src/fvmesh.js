@@ -25,9 +25,10 @@ export default class FVMesh {
         this.rotationVelocity = new Vector(0,0,0);
 
         this.geometry = geometry;
-        this.faceList = [];
-        this.vertexMap = new Map();
-        this.geometry.cloneData(this.faceList, this.vertexMap);
+        
+        const { faceList, vertexMap } = this.geometry.cloneData();
+        this.faceList = faceList;
+        this.vertexMap = vertexMap;
     }
 
     update(timeframe, time, frameCount) {
