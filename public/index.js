@@ -1,6 +1,8 @@
 import createEngine from "../src/engine.js";
-import VVMesh from "../src/VVMesh.js";
+import VVMesh from "../src/_vvmesh.js";
+import FVMesh from "../src/fvMesh.js";
 import VVBoxGeometry from "../src/primitives/vvBoxGeometry.js";
+import FVBoxGeometry from "../src/primitives/fvBoxGeometry.js";
 
 /**
  * VV Mesh example
@@ -33,9 +35,9 @@ vvMeshExample();
     const canvas = document.querySelector('#fv-canvas');
     const renderer = new createEngine(canvas);
     
-    const boxGeometry = new VVBoxGeometry();
+    const boxGeometry = new FVBoxGeometry();
     
-    const boxMesh = new VVMesh(boxGeometry);
+    const boxMesh = new FVMesh(boxGeometry);
     boxMesh.scale = 100;
     boxMesh.pos.x = 200;
     boxMesh.pos.y = 200;

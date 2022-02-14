@@ -2,7 +2,7 @@ import Vector from "../helpers/vector.js";
 import Vertex from "../vertex.js";
 
 /**
- * Primitive 3D shape representing a simple Box
+ * Primitive 3D shape representing a simple Box  ("box-cylinder")
  * 
  * Uses the Vertex-vertex mesh to represent the data
  */

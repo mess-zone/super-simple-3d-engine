@@ -74,7 +74,8 @@ export default class VVMesh {
         ctx.stroke();
     }
 
-    drawFace(v1, v2, v3, v4, ctx) {
+    // TODO does not apply to vvmesh?
+    drawFace(v1, v2, v3, ctx) {
         const color = "#8888";
 
         ctx.fillStyle = color;
@@ -83,21 +84,13 @@ export default class VVMesh {
         ctx.moveTo(v1.x, v1.y);
         ctx.lineTo(v2.x, v2.y);
         ctx.lineTo(v3.x, v3.y);
-        ctx.lineTo(v4.x, v4.y);
         ctx.closePath();
         ctx.fill();
     }
 
     draw(ctx) {
         if(this.appearance.faces) {
-            // this.drawFace(this.vertices[0], this.vertices[1], this.vertices[2], this.vertices[3], ctx);
-            // this.drawFace(this.vertices[4], this.vertices[5], this.vertices[6], this.vertices[7], ctx);
-            
-            // this.drawFace(this.vertices[0], this.vertices[4], this.vertices[7], this.vertices[3], ctx);
-            // this.drawFace(this.vertices[1], this.vertices[5], this.vertices[6], this.vertices[2], ctx);
-            
-            // this.drawFace(this.vertices[0], this.vertices[1], this.vertices[5], this.vertices[4], ctx);
-            // this.drawFace(this.vertices[3], this.vertices[2], this.vertices[6], this.vertices[7], ctx);
+            // TODO
         }
 
         if(this.appearance.edges) {
