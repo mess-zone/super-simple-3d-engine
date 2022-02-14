@@ -1,17 +1,15 @@
 import Vector from "../helpers/vector.js";
 import Vertex from "../vertex.js";
+import AbstractBoxGeometry from "./abstractBoxGeometry.js";
 
 /**
  * Primitive 3D shape representing a simple Box ("box-cylinder")
  * 
  * Uses the Face-vertex mesh to represent the data
  */
-export default class FVBoxGeometry {
+export default class FVBoxGeometry extends AbstractBoxGeometry {
     constructor() {
-        this.boxSize = 1;
-        // this.boxWidth = 1;
-        // this.boxHeight = 1;
-        // this.boxDepth = 1;
+        super();
 
         const { faceList, vertexMap } = this.cloneData();
         this.faceList = faceList;
@@ -95,9 +93,5 @@ export default class FVBoxGeometry {
             faceList,
             vertexMap,
         }
-    }
-
-    getCentroid() {
-        return new Vector(this.boxSize/2, this.boxSize/2, this.boxSize/2);
     }
 }
