@@ -1,5 +1,4 @@
 import Vector from "../helpers/vector.js";
-import Vertex from "../vertex.js";
 
 /**
  * Primitive 3D shape representing a simple Box ("box-cylinder")
@@ -22,7 +21,6 @@ export default class AbstractBoxGeometry {
      */
     cloneData() {
         throw new TypeError("cloneData method should be implemented in concrete class");
-
     }
 
     /**

@@ -1,11 +1,11 @@
 import createEngine from "../src/engine.js";
-import VVMesh from "../src/_vvmesh.js";
+import VVMesh from "../src/vvmesh.js";
 import FVMesh from "../src/fvMesh.js";
 import VVBoxGeometry from "../src/primitives/vvBoxGeometry.js";
 import FVBoxGeometry from "../src/primitives/fvBoxGeometry.js";
 
 /**
- * VV Mesh example
+ * Vertex-vertex Mesh example
  */
 function vvMeshExample() {
     const canvas = document.querySelector('#vv-canvas');
@@ -29,7 +29,7 @@ vvMeshExample();
 
 
 /**
- * FV Mesh example
+ * Face-vertex Mesh example
  */
  function fvMeshExample() {
     const canvas = document.querySelector('#fv-canvas');

@@ -2,20 +2,18 @@ import TransformationChain from "./helpers/transformationChain.js";
 import AbstractMesh from "./abstractMesh.js";
 
 /**
- * Face-vertex mesh
+ * Vertex-vertex mesh
  * 
- * Represent an object as a set of faces and a set of vertices. 
- * This is the most widely used mesh representation, being the input typically accepted by modern graphics hardware.
- * Face-vertex meshes improve on VV-mesh for modeling in that they allow explicit lookup of the vertices of a face, 
- * and the faces surrounding a vertex. 
- * Every face is required to have exactly 3 vertices.
+ * Represent an object as a set of vertices connected to other vertices. 
+ * This is the simplest representation, but not widely used since the face and edge information is implicit. 
+ * Thus, it is necessary to traverse the data in order to generate a list of faces for rendering. 
+ * In addition, operations on edges and faces are not easily accomplished.
  */
-export default class FVMesh extends AbstractMesh {
+export default class VVMesh extends AbstractMesh {
     constructor(geometry) {
         super(geometry);
-        
-        const { faceList, vertexMap } = this.geometry.cloneData();
-        this.faceList = faceList;
+
+        const { vertexMap } = this.geometry.cloneData();
         this.vertexMap = vertexMap;
     }
 
@@ -47,19 +45,16 @@ export default class FVMesh extends AbstractMesh {
 
     draw(ctx) {
         if(this.appearance.faces) {
-            for(const face of this.faceList) {
-                const [a, b, c] = face;
-                this.drawFace(a.pos, b.pos, c.pos, ctx);
-            }
+            // TODO
         }
 
         if(this.appearance.edges) {
             // TODO this method is inefficient, because draws the same edge more than 1 time
-            for(const face of this.faceList) {
-                const [a, b, c] = face;
-                this.drawEdge(a.pos, b.pos, "#fff", ctx);
-                this.drawEdge(a.pos, c.pos, "#fff", ctx);
-                this.drawEdge(b.pos, c.pos, "#fff", ctx);
+            for(const item of this.vertexMap) {
+                const [vertice, relations] = item;
+                for(let i = 0; i < relations.length; i++) {
+                    this.drawEdge(vertice.pos, relations[i].pos, "#fff", ctx);
+                }
             }
         }
 
